@@ -8,9 +8,13 @@ npm error command sh -c craco build
 sh: craco: not found
 ```
 
+## Root Cause
+
+The root `package.json` had `"workspaces": ["api", "frontend"]` which caused npm to treat this as a monorepo. This prevented proper dependency installation in the frontend directory.
+
 ## The Solution
 
-The build command needs to install **devDependencies** (which includes craco).
+**We've removed the workspaces configuration** and updated the build command.
 
 ---
 
@@ -23,7 +27,7 @@ The build command needs to install **devDependencies** (which includes craco).
 3. **Find "Build Command"**
 4. **Change it to:**
    ```bash
-   cd frontend && npm install --include=dev && npm run build
+   cd frontend && npm install && npm run build
    ```
 5. **Click "Save Changes"**
 6. **Render will automatically redeploy**
@@ -33,12 +37,12 @@ The build command needs to install **devDependencies** (which includes craco).
 
 ### If you're using render.yaml (Blueprint):
 
-The `render.yaml` file has been updated with the correct command. Just:
+The files have been updated. Just:
 
 1. **Commit and push the changes:**
    ```bash
-   git add render.yaml
-   git commit -m "Fix frontend build command"
+   git add .
+   git commit -m "Fix workspaces and build command"
    git push origin main
    ```
 
@@ -48,10 +52,11 @@ The `render.yaml` file has been updated with the correct command. Just:
 
 ## Why This Happens
 
-- `craco` is listed in `devDependencies` in `frontend/package.json`
-- By default, some build systems skip devDependencies
-- The `--include=dev` flag ensures devDependencies are installed
-- This gives us access to `craco` for the build process
+- The root `package.json` had `"workspaces": ["api", "frontend"]`
+- This made npm treat the project as a monorepo
+- Workspaces change how npm installs dependencies
+- This prevented proper installation in the frontend directory
+- **Solution:** Removed workspaces configuration from root package.json
 
 ---
 

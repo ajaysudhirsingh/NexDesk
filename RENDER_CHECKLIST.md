@@ -46,7 +46,7 @@
 2. [ ] Connect same repository
 3. [ ] Configure:
    - Name: `nexdesk-frontend`
-   - Build Command: `cd frontend && npm install --include=dev && npm run build`
+   - Build Command: `cd frontend && npm install && npm run build`
    - Publish Directory: `frontend/build`
    - Plan: `Free`
 
