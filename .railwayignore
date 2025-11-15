@@ -1,0 +1,16 @@
+# Railway ignore file
+node_modules/
+.git/
+.github/
+.vscode/
+*.log
+.env
+.env.development
+api/.env
+api/logs/
+api/uploads/
+frontend/node_modules/
+frontend/build/
+*.md
+!README.md
+!DEPLOYMENT.md
