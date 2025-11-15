@@ -15,7 +15,13 @@ import PasswordInput from './components/PasswordInput';
 
 const App = () => {
   const [user, setUser] = useState(null);
-  const [token, setToken] = useState(localStorage.getItem('token'));
+  const [token, setToken] = useState(() => {
+    // Check if window is defined (browser environment)
+    if (typeof window !== 'undefined' && window.localStorage) {
+      return localStorage.getItem('token');
+    }
+    return null;
+  });
   const [loading, setLoading] = useState(true);
   const [currentView, setCurrentView] = useState('dashboard');
   const [tickets, setTickets] = useState([]);
