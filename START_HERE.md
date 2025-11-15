@@ -93,7 +93,7 @@ git push origin main
    Name: nexdesk-frontend
    Branch: main
    Root Directory: (leave blank)
-   Build Command: cd frontend && npm install && npm run build
+   Build Command: cd frontend && npm install --include=dev && npm run build
    Publish Directory: frontend/build
    ```
 
