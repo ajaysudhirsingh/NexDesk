@@ -38,6 +38,11 @@ services:
     plan: free
     buildCommand: cd frontend && npm install && npm run build
     staticPublishPath: ./frontend/build
+    envVars:
+      - key: NODE_OPTIONS
+        value: --no-experimental-global-webcrypto
+      - key: GENERATE_SOURCEMAP
+        value: false
     routes:
       - type: rewrite
         source: /*
