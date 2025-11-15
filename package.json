@@ -1,0 +1,42 @@
+{
+  "name": "nexdesk",
+  "version": "1.0.0",
+  "description": "NEXDESK - Complete IT Infrastructure Management Platform",
+  "private": true,
+  "scripts": {
+    "install:all": "npm install && cd api && npm install && cd ../frontend && npm install",
+    "start": "concurrently \"npm run start:api\" \"npm run start:frontend\"",
+    "start:api": "cd api && npm start",
+    "start:frontend": "cd frontend && npm start",
+    "dev": "concurrently \"npm run dev:api\" \"npm run dev:frontend\"",
+    "dev:api": "cd api && npm run dev",
+    "dev:frontend": "cd frontend && npm start",
+    "build": "cd frontend && npm run build",
+    "test": "cd api && npm test",
+    "clean": "rm -rf node_modules api/node_modules frontend/node_modules",
+    "setup": "npm run install:all && cd api && cp .env.example .env"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "workspaces": [
+    "api",
+    "frontend"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "ticketing",
+    "it-management",
+    "infrastructure",
+    "nodejs",
+    "react",
+    "mongodb"
+  ],
+  "author": "NEXDESK Team",
+  "license": "MIT",
+  "dependencies": {
+    "node-fetch": "^3.3.2"
+  }
+}
