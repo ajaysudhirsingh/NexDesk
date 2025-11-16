@@ -3199,208 +3199,70 @@ const App = () => {
         {/* Top Header */}
         <header className="bg-gradient-to-r from-blue-900 to-blue-700 shadow-lg sticky top-0 z-40">
           <div className="max-w-7xl mx-auto">
-            <div className="flex justify-between items-center h-[88px] px-4 md:px-6">
+            <div className="flex justify-between items-center h-[88px] px-4 md:px-6 gap-3">
               {/* Mobile Menu Button */}
               {isMobile && (
                 <button
                   onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                  className="text-white hover:text-blue-200 focus:outline-none focus:text-blue-200 transition-colors duration-200"
+                  className="text-white hover:text-blue-200 focus:outline-none focus:text-blue-200 transition-colors duration-200 flex-shrink-0"
                 >
                   <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
                   </svg>
                 </button>
               )}
-              <div>
-                <h1 className="text-2xl font-bold text-white leading-tight">
-                  {currentView === 'dashboard' && 'System Overview'}
-                  {currentView === 'tickets' && 'Tickets Management'}
-                  {currentView === 'create-ticket' && 'Create New Ticket'}
+              <div className="flex-1 min-w-0 flex flex-col justify-center">
+                <h1 className="text-lg md:text-2xl font-bold text-white leading-tight truncate">
+                  {currentView === 'dashboard' && 'Dashboard'}
+                  {currentView === 'tickets' && 'Tickets'}
+                  {currentView === 'create-ticket' && 'New Ticket'}
                   {currentView === 'closed-tickets' && 'Closed Tickets'}
-                  {currentView === 'assets' && 'Assets Management'}
-                  {currentView === 'create-asset' && 'Create New Asset'}
-                  {currentView === 'users' && 'Users Management'}
-                  {currentView === 'create-user' && 'Create New User'}
-                  {currentView === 'superadmin' && 'System Administration'}
-                  {currentView === 'clients' && 'Client Management'}
-                  {currentView === 'chat' && 'Team Chat'}
+                  {currentView === 'assets' && 'Assets'}
+                  {currentView === 'create-asset' && 'New Asset'}
+                  {currentView === 'users' && 'Users'}
+                  {currentView === 'create-user' && 'New User'}
+                  {currentView === 'superadmin' && 'Administration'}
+                  {currentView === 'clients' && 'Clients'}
+                  {currentView === 'chat' && 'Chat'}
                   {currentView === 'teams' && 'Teams'}
-                  {currentView === 'manage-groups' && 'Manage Groups'}
+                  {currentView === 'manage-groups' && 'Groups'}
                   {currentView === 'analytics' && 'Analytics'}
-                  {currentView === 'infrastructure' && 'IT Infrastructure Health'}
-                  {currentView === 'reports' && 'Advanced Reports'}
+                  {currentView === 'infrastructure' && 'Infrastructure'}
+                  {currentView === 'reports' && 'Reports'}
                 </h1>
-                <p className="text-sm text-blue-100 mt-1 flex items-center gap-2">
+                <div className="flex flex-wrap items-center gap-2 mt-0.5">
                   {currentView === 'dashboard' && (
                     <>
-                      <span className="flex items-center gap-2">
-                        <span className="flex items-center gap-1 bg-green-500/20 text-green-100 px-2 py-1 rounded-full text-xs font-medium">
-                          <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-                          Realtime Data
-                        </span>
-                        <span>Welcome back, {user.username}</span>
+                      <span className="hidden md:flex items-center gap-1 bg-green-500/20 text-green-100 px-2 py-1 rounded-full text-xs font-medium">
+                        <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></span>
+                        Live
                       </span>
-                      <span className="text-xs">•</span>
-                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                      <span className="hidden sm:inline text-xs md:text-sm text-blue-100">Welcome, {user.username}</span>
+                      <span className={`hidden md:inline px-2 py-1 rounded-full text-xs font-medium ${
                         dashboardStats.is_admin 
                           ? 'bg-green-500/20 text-green-100' 
                           : 'bg-blue-500/20 text-blue-100'
                       }`}>
-                        {dashboardStats.is_admin ? 'Admin View (All Data)' : 'Personal View (My Data)'}
+                        {dashboardStats.is_admin ? 'Admin' : 'Personal'}
                       </span>
                     </>
                   )}
-                  {currentView === 'tickets' && (
-                    <span className="flex items-center gap-2">
-                      <span className="flex items-center gap-1 bg-green-500/20 text-green-100 px-2 py-1 rounded-full text-xs font-medium">
-                        <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-                        Realtime Data
-                      </span>
-                      <span>Manage and track support tickets</span>
-                    </span>
-                  )}
-                  {currentView === 'create-ticket' && (
-                    <span className="flex items-center gap-2">
-                      <span className="flex items-center gap-1 bg-green-500/20 text-green-100 px-2 py-1 rounded-full text-xs font-medium">
-                        <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-                        Realtime Data
-                      </span>
-                      <span>Submit a new support request</span>
-                    </span>
-                  )}
-                  {currentView === 'closed-tickets' && (
-                    <span className="flex items-center gap-2">
-                      <span className="flex items-center gap-1 bg-green-500/20 text-green-100 px-2 py-1 rounded-full text-xs font-medium">
-                        <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-                        Realtime Data
-                      </span>
-                      <span>View resolved tickets</span>
-                    </span>
-                  )}
-                  {currentView === 'assets' && (
-                    <span className="flex items-center gap-2">
-                      <span className="flex items-center gap-1 bg-green-500/20 text-green-100 px-2 py-1 rounded-full text-xs font-medium">
-                        <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-                        Realtime Data
-                      </span>
-                      <span>Manage company assets and assignments</span>
-                    </span>
-                  )}
-                  {currentView === 'create-asset' && (
-                    <span className="flex items-center gap-2">
-                      <span className="flex items-center gap-1 bg-green-500/20 text-green-100 px-2 py-1 rounded-full text-xs font-medium">
-                        <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-                        Realtime Data
-                      </span>
-                      <span>Add a new asset to the system</span>
-                    </span>
-                  )}
-                  {currentView === 'users' && (
-                    <span className="flex items-center gap-2">
-                      <span className="flex items-center gap-1 bg-green-500/20 text-green-100 px-2 py-1 rounded-full text-xs font-medium">
-                        <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-                        Realtime Data
-                      </span>
-                      <span>Manage system users and permissions</span>
-                    </span>
-                  )}
-                  {currentView === 'create-user' && (
-                    <span className="flex items-center gap-2">
-                      <span className="flex items-center gap-1 bg-green-500/20 text-green-100 px-2 py-1 rounded-full text-xs font-medium">
-                        <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-                        Realtime Data
-                      </span>
-                      <span>Add a new user to the system</span>
-                    </span>
-                  )}
-                  {currentView === 'superadmin' && (
-                    <span className="flex items-center gap-2">
-                      <span className="flex items-center gap-1 bg-green-500/20 text-green-100 px-2 py-1 rounded-full text-xs font-medium">
-                        <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-                        Realtime Data
-                      </span>
-                      <span>Bulk data management and system reset</span>
-                    </span>
-                  )}
-                  {currentView === 'clients' && (
-                    <span className="flex items-center gap-2">
-                      <span className="flex items-center gap-1 bg-green-500/20 text-green-100 px-2 py-1 rounded-full text-xs font-medium">
-                        <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-                        Realtime Data
-                      </span>
-                      <span>Manage client organizations and access</span>
-                    </span>
-                  )}
-                  {currentView === 'chat' && (
-                    <span className="flex items-center gap-2">
-                      <span className="flex items-center gap-1 bg-green-500/20 text-green-100 px-2 py-1 rounded-full text-xs font-medium">
-                        <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-                        Realtime Data
-                      </span>
-                      <span>Communicate with your team</span>
-                    </span>
-                  )}
-                  {currentView === 'teams' && (
-                    <span className="flex items-center gap-2">
-                      <span className="flex items-center gap-1 bg-green-500/20 text-green-100 px-2 py-1 rounded-full text-xs font-medium">
-                        <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-                        Realtime Data
-                      </span>
-                      <span>View and manage your teams</span>
-                    </span>
-                  )}
-                  {currentView === 'manage-groups' && (
-                    <span className="flex items-center gap-2">
-                      <span className="flex items-center gap-1 bg-green-500/20 text-green-100 px-2 py-1 rounded-full text-xs font-medium">
-                        <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-                        Realtime Data
-                      </span>
-                      <span>Admin: Manage all teams and members</span>
-                    </span>
-                  )}
-                  {currentView === 'analytics' && (
-                    <span className="flex items-center gap-2">
-                      <span className="flex items-center gap-1 bg-green-500/20 text-green-100 px-2 py-1 rounded-full text-xs font-medium">
-                        <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-                        Realtime Data
-                      </span>
-                      <span>Analyze system performance</span>
-                    </span>
-                  )}
-                  {currentView === 'infrastructure' && (
-                    <span className="flex items-center gap-2">
-                      <span className="flex items-center gap-1 bg-green-500/20 text-green-100 px-2 py-1 rounded-full text-xs font-medium">
-                        <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-                        Realtime Data
-                      </span>
-                      <span>Monitor system outages, preventive maintenance, changes, and vendor performance</span>
-                    </span>
-                  )}
-                  {currentView === 'reports' && (
-                    <span className="flex items-center gap-2">
-                      <span className="flex items-center gap-1 bg-green-500/20 text-green-100 px-2 py-1 rounded-full text-xs font-medium">
-                        <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-                        Realtime Data
-                      </span>
-                      <span>Comprehensive reporting and insights</span>
-                    </span>
-                  )}
-                </p>
+                </div>
               </div>
               
-              <div className="flex items-center space-x-4">
+              <div className="flex items-center gap-2 md:gap-4 flex-shrink-0">
                 {/* User Menu */}
-                <div className="flex items-center space-x-2 relative">
-                  <span className="text-sm text-blue-100">{user.username}</span>
-                  <span className={`px-2 py-1 text-xs rounded-full ${user.role === 'admin' ? 'bg-blue-100 text-blue-800' : 'bg-blue-100 text-blue-800'}`}>{user.role}</span>
+                <div className="flex items-center gap-1 md:gap-2 relative">
+                  <span className="hidden md:inline text-xs md:text-sm text-blue-100">{user.username}</span>
+                  <span className={`hidden md:inline px-2 py-1 text-xs rounded-full ${user.role === 'admin' ? 'bg-blue-100 text-blue-800' : 'bg-blue-100 text-blue-800'}`}>{user.role}</span>
                   <button
                     onClick={() => setShowProfileDropdown(v => !v)}
-                    className="flex items-center px-3 py-2 rounded-full bg-blue-800 hover:bg-blue-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="flex items-center px-2 md:px-3 py-2 rounded-full bg-blue-800 hover:bg-blue-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                   >
                     <svg className="w-5 h-5 text-blue-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5.121 17.804A13.937 13.937 0 0112 15c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
-                    <span className="ml-2 text-sm font-medium">Profile</span>
+                    <span className="hidden md:inline ml-2 text-sm font-medium">Profile</span>
                     <svg className="w-4 h-4 ml-1 text-blue-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                     </svg>
@@ -3476,11 +3338,11 @@ const App = () => {
                       <p className={`text-sm ${dashboardStats.is_admin ? 'text-green-700' : 'text-blue-700'}`}>
                         {dashboardStats.is_admin ? (
                           <>
-                            <span className="font-medium">Admin Dashboard:</span> You're viewing all data for your organization ({dashboardStats.data_scope || 'all_tenant_data'}).
+                            <span className="font-medium">Admin Dashboard:</span> You're viewing all data for your organization.
                           </>
                         ) : (
                           <>
-                            <span className="font-medium">Personal Dashboard:</span> You're viewing only tickets and assets assigned to you ({dashboardStats.data_scope || 'user_specific_data'}).
+                            <span className="font-medium">Personal Dashboard:</span> You're viewing only tickets and assets assigned to you.
                           </>
                         )}
                       </p>
@@ -3907,42 +3769,54 @@ const App = () => {
                   </button>
                   </div>
                 </div>
-                <h2 className="text-xl font-semibold text-gray-900 mb-4">Open Tickets</h2>
+                <h2 className="text-lg md:text-xl font-semibold text-gray-900 mb-4">Open Tickets</h2>
                 
-                <div className="bg-white rounded-lg shadow p-6 overflow-y-auto" style={{maxHeight: 'calc(100vh - 300px)'}}>
-                  <div className="space-y-4">
+                <div className="bg-white rounded-lg shadow p-4 md:p-6 overflow-y-auto" style={{maxHeight: 'calc(100vh - 300px)'}}>
+                  <div className="space-y-3 md:space-y-4">
                     {tickets.map((ticket) => (
-                      <div key={ticket.id} className="border rounded-lg p-4 hover:bg-gray-50 cursor-pointer" onClick={() => handleTicketClick(ticket)}>
-                        <div className="flex items-center justify-between">
-                          <div className="flex-1">
-                            <h3 className="text-lg font-medium text-gray-900">{ticket.title}</h3>
-                            <p className="text-sm text-gray-600 mt-1">{ticket.description}</p>
-                            {ticket.media_url && (
-                              <div className="mt-2">
-                                <span className="inline-flex items-center px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded-full">
-                                  📎 Has Media
-                                </span>
-                              </div>
-                            )}
-                            <div className="flex items-center space-x-4 mt-2 text-sm text-gray-500">
-                              <span>Created by: {ticket.created_by_username}</span>
-                              {ticket.assigned_to_username && <span>Assigned to: {ticket.assigned_to_username}</span>}
-                              <span>{new Date(ticket.created_at).toLocaleDateString()}</span>
-                            </div>
+                      <div key={ticket.id} className="border rounded-lg p-3 md:p-4 hover:bg-gray-50 cursor-pointer transition-colors" onClick={() => handleTicketClick(ticket)}>
+                        {/* Mobile Layout */}
+                        <div className="flex flex-col space-y-3">
+                          {/* Title and Description */}
+                          <div>
+                            <h3 className="text-base md:text-lg font-medium text-gray-900 line-clamp-2">{ticket.title}</h3>
+                            <p className="text-sm text-gray-600 mt-1 line-clamp-2">{ticket.description}</p>
                           </div>
-                          <div className="flex items-center space-x-2 ml-4">
-                            <span className={`px-2 py-1 text-xs rounded-full ${ticket.priority === 'high' ? 'bg-red-100 text-red-800' : ticket.priority === 'medium' ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800'}`}>
+                          
+                          {/* Badges Row */}
+                          <div className="flex flex-wrap items-center gap-2">
+                            <span className={`px-2 py-1 text-xs rounded-full font-medium ${ticket.priority === 'high' ? 'bg-red-100 text-red-800' : ticket.priority === 'medium' ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800'}`}>
                               {ticket.priority}
                             </span>
-                            <span className={`px-2 py-1 text-xs rounded-full ${ticket.status === 'open' ? 'bg-blue-100 text-blue-800' : ticket.status === 'in_progress' ? 'bg-orange-100 text-orange-800' : 'bg-gray-100 text-gray-800'}`}>
+                            <span className={`px-2 py-1 text-xs rounded-full font-medium ${ticket.status === 'open' ? 'bg-blue-100 text-blue-800' : ticket.status === 'in_progress' ? 'bg-orange-100 text-orange-800' : 'bg-gray-100 text-gray-800'}`}>
                               {ticket.status}
                             </span>
+                            {ticket.media_url && (
+                              <span className="inline-flex items-center px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded-full font-medium">
+                                📎 Media
+                              </span>
+                            )}
+                          </div>
+                          
+                          {/* Info Row - Responsive */}
+                          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-xs text-gray-500">
+                            <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
+                              <span className="truncate">By: {ticket.created_by_username}</span>
+                              {ticket.assigned_to_username && (
+                                <span className="truncate">To: {ticket.assigned_to_username}</span>
+                              )}
+                              <span className="whitespace-nowrap">{new Date(ticket.created_at).toLocaleDateString()}</span>
+                            </div>
+                          </div>
+                          
+                          {/* Action Buttons - Mobile Friendly */}
+                          <div className="flex items-center gap-2 pt-2 border-t border-gray-100">
                             <button
                               onClick={(e) => {
                                 e.stopPropagation();
                                 setSelectedTicket(ticket);
                               }}
-                              className="text-blue-600 hover:text-blue-900 text-sm font-medium"
+                              className="flex-1 sm:flex-none px-3 py-1.5 text-xs font-medium text-blue-600 hover:text-blue-900 hover:bg-blue-50 rounded-md transition-colors"
                             >
                               Edit
                             </button>
@@ -3952,7 +3826,7 @@ const App = () => {
                                 setTicketToClose(ticket);
                                 setShowCloseModal(true);
                               }}
-                              className="text-green-600 hover:text-green-900 text-sm font-medium"
+                              className="flex-1 sm:flex-none px-3 py-1.5 text-xs font-medium text-green-600 hover:text-green-900 hover:bg-green-50 rounded-md transition-colors"
                             >
                               Close
                             </button>
@@ -3961,8 +3835,12 @@ const App = () => {
                       </div>
                     ))}
                     {tickets.length === 0 && (
-                      <div className="text-center py-8">
-                        <p className="text-gray-500">No tickets found</p>
+                      <div className="text-center py-12">
+                        <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+                        </svg>
+                        <p className="mt-2 text-sm font-medium text-gray-900">No open tickets</p>
+                        <p className="mt-1 text-sm text-gray-500">All caught up! No tickets to display.</p>
                       </div>
                     )}
                   </div>
@@ -4315,51 +4193,66 @@ const App = () => {
                   </div>
                 </div>
 
-                <h2 className="text-xl font-semibold text-gray-900 mb-4">Closed Tickets</h2>
+                <h2 className="text-lg md:text-xl font-semibold text-gray-900 mb-4">Closed Tickets</h2>
                 
-                <div className="bg-white rounded-lg shadow p-6 overflow-y-auto" style={{maxHeight: 'calc(100vh - 300px)'}}>
-                  <div className="space-y-4">
+                <div className="bg-white rounded-lg shadow p-4 md:p-6 overflow-y-auto" style={{maxHeight: 'calc(100vh - 300px)'}}>
+                  <div className="space-y-3 md:space-y-4">
                     {closedTickets.map((ticket) => (
-                      <div key={ticket.id} className="border rounded-lg p-4 hover:bg-gray-50 cursor-pointer" onClick={() => handleTicketClick(ticket)}>
-                        <div className="flex items-center justify-between">
-                          <div className="flex-1">
-                            <h3 className="text-lg font-medium text-gray-900">{ticket.title}</h3>
-                            <p className="text-sm text-gray-600 mt-1">{ticket.description}</p>
-                            {ticket.media_url && (
-                              <div className="mt-2">
-                                <span className="inline-flex items-center px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded-full">
-                                  📎 Has Media
-                                </span>
-                              </div>
-                            )}
-                            <div className="flex items-center space-x-4 mt-2 text-sm text-gray-500">
-                              <span>Created by: {ticket.created_by_username}</span>
-                              {ticket.assigned_to_username && <span>Assigned to: {ticket.assigned_to_username}</span>}
-                              <span>Closed by: {ticket.closed_by_username}</span>
-                              <span>Closed: {new Date(ticket.closed_at).toLocaleDateString()}</span>
-                            </div>
-                            {ticket.close_comment && (
-                              <div className="mt-2 p-3 bg-gray-50 rounded-md">
-                                <p className="text-sm text-gray-700">
-                                  <span className="font-medium">Close Comment:</span> {ticket.close_comment}
-                                </p>
-                              </div>
-                            )}
+                      <div key={ticket.id} className="border rounded-lg p-3 md:p-4 hover:bg-gray-50 cursor-pointer transition-colors" onClick={() => handleTicketClick(ticket)}>
+                        {/* Mobile Layout */}
+                        <div className="flex flex-col space-y-3">
+                          {/* Title and Description */}
+                          <div>
+                            <h3 className="text-base md:text-lg font-medium text-gray-900 line-clamp-2">{ticket.title}</h3>
+                            <p className="text-sm text-gray-600 mt-1 line-clamp-2">{ticket.description}</p>
                           </div>
-                          <div className="flex items-center space-x-2 ml-4">
-                            <span className={`px-2 py-1 text-xs rounded-full ${ticket.priority === 'high' ? 'bg-red-100 text-red-800' : ticket.priority === 'medium' ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800'}`}>
+                          
+                          {/* Badges Row */}
+                          <div className="flex flex-wrap items-center gap-2">
+                            <span className={`px-2 py-1 text-xs rounded-full font-medium ${ticket.priority === 'high' ? 'bg-red-100 text-red-800' : ticket.priority === 'medium' ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800'}`}>
                               {ticket.priority}
                             </span>
-                            <span className="px-2 py-1 text-xs rounded-full bg-green-100 text-green-800">
-                              closed
+                            <span className="px-2 py-1 text-xs rounded-full font-medium bg-green-100 text-green-800">
+                              ✓ Closed
                             </span>
+                            {ticket.media_url && (
+                              <span className="inline-flex items-center px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded-full font-medium">
+                                📎 Media
+                              </span>
+                            )}
                           </div>
+                          
+                          {/* Info Grid - Responsive */}
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-gray-500">
+                            <div className="flex flex-col space-y-1">
+                              <span className="truncate">Created: {ticket.created_by_username}</span>
+                              {ticket.assigned_to_username && (
+                                <span className="truncate">Assigned: {ticket.assigned_to_username}</span>
+                              )}
+                            </div>
+                            <div className="flex flex-col space-y-1">
+                              <span className="truncate">Closed by: {ticket.closed_by_username}</span>
+                              <span className="whitespace-nowrap">Date: {new Date(ticket.closed_at).toLocaleDateString()}</span>
+                            </div>
+                          </div>
+                          
+                          {/* Close Comment */}
+                          {ticket.close_comment && (
+                            <div className="p-3 bg-gray-50 rounded-md border-l-4 border-green-500">
+                              <p className="text-xs font-medium text-gray-700 mb-1">Close Comment:</p>
+                              <p className="text-sm text-gray-600">{ticket.close_comment}</p>
+                            </div>
+                          )}
                         </div>
                       </div>
                     ))}
                     {closedTickets.length === 0 && (
-                      <div className="text-center py-8">
-                        <p className="text-gray-500">No closed tickets found</p>
+                      <div className="text-center py-12">
+                        <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <p className="mt-2 text-sm font-medium text-gray-900">No closed tickets</p>
+                        <p className="mt-1 text-sm text-gray-500">Closed tickets will appear here.</p>
                       </div>
                     )}
                   </div>
@@ -4369,12 +4262,12 @@ const App = () => {
 
             {/* Assets View */}
             {currentView === 'assets' && (
-              <div className="space-y-6">
-                <div className="flex justify-between items-center">
-                  <h2 className="text-xl font-semibold text-gray-900">
+              <div className="space-y-4 md:space-y-6">
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
+                  <h2 className="text-lg md:text-xl font-semibold text-gray-900">
                     {user.role === 'admin' ? 'All Assets' : 'My Assets'}
                   </h2>
-                  <div className="flex space-x-3">
+                  <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
                     {user.role === 'admin' && (
                         <select
                           onChange={(e) => {
@@ -4383,7 +4276,7 @@ const App = () => {
                               e.target.value = '';
                             }
                           }}
-                        className="bg-green-600 text-white px-6 py-2.5 rounded-md text-sm font-medium hover:bg-green-700 transition-colors min-w-[120px]"
+                        className="bg-green-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-green-700 transition-colors w-full sm:w-auto"
                         >
                           <option value="">Export Assets</option>
                           <option value="csv">CSV</option>
@@ -4395,7 +4288,7 @@ const App = () => {
                     {user.role === 'admin' && (
                       <button
                         onClick={() => setCurrentView('create-asset')}
-                        className="bg-blue-600 text-white px-6 py-2.5 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors min-w-[120px]"
+                        className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors w-full sm:w-auto"
                       >
                         + Create Asset
                       </button>
@@ -4404,83 +4297,103 @@ const App = () => {
                 </div>
                 
                 <div className="bg-white rounded-lg shadow">
-                  <div className="p-6">
-                    <div className="space-y-4">
+                  <div className="p-4 md:p-6">
+                    <div className="space-y-3 md:space-y-4">
                       {assets.map((asset) => (
-                        <div key={asset.id} className="border rounded-lg p-4 hover:bg-gray-50 cursor-pointer" onClick={() => handleAssetClick(asset)}>
-                          <div className="flex items-center justify-between">
-                            <div className="flex-1">
-                              <h3 className="text-lg font-medium text-gray-900">{asset.name}</h3>
-                              <p className="text-sm text-gray-600 mt-1">{asset.description}</p>
-                              <div className="flex items-center space-x-4 mt-2 text-sm text-gray-500">
-                                <span>Type: {asset.asset_type}</span>
-                                <span>Value: ₹{asset.value}</span>
-                                {asset.serial_number && <span>S/N: {asset.serial_number}</span>}
-                                {asset.assigned_to_username && <span>Assigned to: {asset.assigned_to_username}</span>}
-                              </div>
+                        <div key={asset.id} className="border rounded-lg p-3 md:p-4 hover:bg-gray-50 cursor-pointer transition-colors" onClick={() => handleAssetClick(asset)}>
+                          {/* Mobile Layout */}
+                          <div className="flex flex-col space-y-3">
+                            {/* Title and Description */}
+                            <div>
+                              <h3 className="text-base md:text-lg font-medium text-gray-900 line-clamp-1">{asset.name}</h3>
+                              <p className="text-sm text-gray-600 mt-1 line-clamp-2">{asset.description}</p>
                             </div>
-                            <div className="flex items-center space-x-3 ml-4">
-                              <span className={`px-3 py-1 text-xs font-semibold rounded-full ${asset.assigned_to ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}`}>
-                                {asset.assigned_to ? 'Assigned' : 'Available'}
-                              </span>
-                              {user.role === 'admin' && (
-                                <div className="flex items-center space-x-2">
-                                  <button
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                      setEditingAsset(asset);
-                                      setEditAssetForm({
-                                        name: asset.name,
-                                        description: asset.description,
-                                        asset_type: asset.asset_type,
-                                        value: asset.value,
-                                        serial_number: asset.serial_number || '',
-                                        assigned_to: asset.assigned_to || ''
-                                      });
-                                    }}
-                                    className="flex items-center px-3 py-1.5 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all duration-200 shadow-sm hover:shadow-md"
-                                    title="Edit Asset"
-                                  >
-                                    <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                    </svg>
-                                    Edit
-                                  </button>
-                                  {!asset.assigned_to && (
-                                    <div className="relative">
-                                      <select
-                                        onClick={(e) => e.stopPropagation()}
-                                        onChange={(e) => {
-                                          if (e.target.value) {
-                                            handleAssignAsset(asset.id, e.target.value);
-                                            e.target.value = '';
-                                          }
-                                        }}
-                                        className="text-sm border border-gray-300 rounded-lg px-3 py-1.5 bg-white hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
-                                      >
-                                        <option value="">Assign to...</option>
-                                        {assignableUsers.map(u => (
-                                          <option key={u.id} value={u.id}>{u.username}</option>
-                                        ))}
-                                      </select>
-                                    </div>
-                                  )}
-                                  <button
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                      handleDeleteAsset(asset.id, asset.name);
-                                    }}
-                                    className="flex items-center px-3 py-1.5 text-sm bg-red-600 text-white rounded-lg hover:bg-red-700 transition-all duration-200 shadow-sm hover:shadow-md"
-                                    title="Delete Asset"
-                                  >
-                                    <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1-1H8a1 1 0 00-1 1v3M4 7h16" />
-                                    </svg>
-                                    Delete
-                                  </button>
+                            
+                            {/* Info Grid - Responsive */}
+                            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs text-gray-500">
+                              <div>
+                                <span className="font-medium text-gray-700">Type:</span>
+                                <p className="truncate">{asset.asset_type}</p>
+                              </div>
+                              <div>
+                                <span className="font-medium text-gray-700">Value:</span>
+                                <p>₹{asset.value}</p>
+                              </div>
+                              {asset.serial_number && (
+                                <div className="col-span-2 sm:col-span-1">
+                                  <span className="font-medium text-gray-700">S/N:</span>
+                                  <p className="truncate">{asset.serial_number}</p>
+                                </div>
+                              )}
+                              {asset.assigned_to_username && (
+                                <div className="col-span-2 sm:col-span-1">
+                                  <span className="font-medium text-gray-700">Assigned:</span>
+                                  <p className="truncate">{asset.assigned_to_username}</p>
                                 </div>
                               )}
                             </div>
+                            
+                            {/* Status Badge */}
+                            <div className="flex items-center">
+                              <span className={`px-3 py-1 text-xs font-semibold rounded-full ${asset.assigned_to ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}`}>
+                                {asset.assigned_to ? '✓ Assigned' : '○ Available'}
+                              </span>
+                            </div>
+                            
+                            {/* Action Buttons - Mobile Friendly */}
+                            {user.role === 'admin' && (
+                              <div className="flex flex-col sm:flex-row gap-2 pt-2 border-t border-gray-100">
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    setEditingAsset(asset);
+                                    setEditAssetForm({
+                                      name: asset.name,
+                                      description: asset.description,
+                                      asset_type: asset.asset_type,
+                                      value: asset.value,
+                                      serial_number: asset.serial_number || '',
+                                      assigned_to: asset.assigned_to || ''
+                                    });
+                                  }}
+                                  className="flex items-center justify-center px-3 py-2 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                                >
+                                  <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                  </svg>
+                                  Edit
+                                </button>
+                                {!asset.assigned_to && (
+                                  <select
+                                    onClick={(e) => e.stopPropagation()}
+                                    onChange={(e) => {
+                                      if (e.target.value) {
+                                        handleAssignAsset(asset.id, e.target.value);
+                                        e.target.value = '';
+                                      }
+                                    }}
+                                    className="text-sm border border-gray-300 rounded-lg px-3 py-2 bg-white hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors"
+                                  >
+                                    <option value="">Assign to...</option>
+                                    {assignableUsers.map(u => (
+                                      <option key={u.id} value={u.id}>{u.username}</option>
+                                    ))}
+                                  </select>
+                                )}
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleDeleteAsset(asset.id, asset.name);
+                                  }}
+                                  className="flex items-center justify-center px-3 py-2 text-sm bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+                                >
+                                  <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1-1H8a1 1 0 00-1 1v3M4 7h16" />
+                                  </svg>
+                                  Delete
+                                </button>
+                              </div>
+                            )}
                           </div>
                         </div>
                       ))}
@@ -5799,22 +5712,22 @@ const App = () => {
               </div>
             )}
 
-            {/* Enhanced Teams View */}
+            {/* Enhanced Teams View - Mobile Responsive */}
             {currentView === 'teams' && (
-              <div className="h-[calc(100vh-200px)] bg-gradient-to-br from-slate-50 to-blue-50 rounded-2xl shadow-2xl flex overflow-hidden">
-                {/* Enhanced Teams List */}
-                <div className="w-1/3 bg-white border-r border-gray-200 flex flex-col">
-                  {/* Header with Gradient */}
-                  <div className="p-6 bg-gradient-to-r from-teal-600 via-teal-700 to-cyan-600 text-white">
-                    <div className="flex justify-between items-center">
+              <div className="h-[calc(100vh-200px)] bg-gradient-to-br from-slate-50 to-blue-50 rounded-lg md:rounded-2xl shadow-lg md:shadow-2xl flex flex-col md:flex-row overflow-hidden">
+                {/* Enhanced Teams List - Mobile Responsive */}
+                <div className={`${selectedTeam ? 'hidden md:flex' : 'flex'} w-full md:w-1/3 bg-white border-r border-gray-200 flex-col`}>
+                  {/* Header with Gradient - Mobile Responsive */}
+                  <div className="p-4 md:p-6 bg-gradient-to-r from-teal-600 via-teal-700 to-cyan-600 text-white">
+                    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
                       <div>
-                        <h3 className="text-xl font-bold">Teams</h3>
-                        <p className="text-teal-100 text-sm mt-1">Collaborate with your teams</p>
+                        <h3 className="text-lg md:text-xl font-bold">Teams</h3>
+                        <p className="text-teal-100 text-xs md:text-sm mt-1">Collaborate with your teams</p>
                       </div>
                       {(user.role === 'admin' || user.role === 'superadmin') && (
                         <button
                           onClick={() => setCurrentView('create-team')}
-                          className="bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-white/30 transition-all duration-200 flex items-center space-x-2 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                          className="w-full sm:w-auto bg-white/20 backdrop-blur-sm text-white px-3 md:px-4 py-2 rounded-lg md:rounded-xl text-xs md:text-sm font-semibold hover:bg-white/30 transition-all duration-200 flex items-center justify-center space-x-2 shadow-lg hover:shadow-xl"
                         >
                           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -5915,26 +5828,32 @@ const App = () => {
                   </div>
                 </div>
 
-                {/* Team Chat Area */}
-                <div className="flex-1 flex flex-col">
+                {/* Team Chat Area - Mobile Responsive */}
+                <div className={`${selectedTeam ? 'flex' : 'hidden md:flex'} flex-1 flex-col w-full`}>
                   {selectedTeam ? (
                     <div className="flex flex-col h-full">
-                      {/* Team Header */}
-                      <div className="flex-shrink-0 p-4 border-b border-gray-200 bg-gray-50">
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center space-x-3">
-                            <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white font-medium">
+                      {/* Team Header - Mobile Responsive */}
+                      <div className="flex-shrink-0 p-3 md:p-4 border-b border-gray-200 bg-gray-50">
+                        <div className="flex items-center justify-between gap-2">
+                          <div className="flex items-center space-x-2 md:space-x-3 flex-1 min-w-0">
+                            {/* Back Button - Mobile Only */}
+                            <button
+                              onClick={() => setSelectedTeam(null)}
+                              className="md:hidden p-2 hover:bg-gray-200 rounded-lg transition-colors"
+                            >
+                              <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                              </svg>
+                            </button>
+                            <div className="w-8 h-8 md:w-10 md:h-10 bg-green-500 rounded-full flex items-center justify-center text-white font-medium text-sm md:text-base flex-shrink-0">
                               {selectedTeam.name.charAt(0).toUpperCase()}
                             </div>
-                            <div>
-                              <p className="font-medium text-gray-900">{selectedTeam.name}</p>
-                              <div className="flex items-center space-x-2">
-                                <p className="text-xs text-gray-500">{selectedTeam.description}</p>
-
-                              </div>
+                            <div className="flex-1 min-w-0">
+                              <p className="font-medium text-sm md:text-base text-gray-900 truncate">{selectedTeam.name}</p>
+                              <p className="text-xs text-gray-500 truncate">{selectedTeam.description}</p>
                             </div>
                           </div>
-                          <div className="flex items-center space-x-2">
+                          <div className="flex items-center gap-1 md:gap-2 flex-shrink-0">
                             {canManageTeam(selectedTeam) && (
                               <>
                                 <button
@@ -5942,9 +5861,9 @@ const App = () => {
                                     setTeamToAddMember(selectedTeam);
                                     setShowAddMemberModal(true);
                                   }}
-                                  className="text-blue-600 hover:text-blue-800 text-sm"
+                                  className="hidden sm:block text-blue-600 hover:text-blue-800 text-xs md:text-sm px-2 py-1 hover:bg-blue-50 rounded"
                                 >
-                                  Add Member
+                                  Add
                                 </button>
                                 <button
                                   onClick={() => {
@@ -5955,16 +5874,22 @@ const App = () => {
                                       manager_id: selectedTeam.manager_id
                                     });
                                   }}
-                                  className="text-gray-600 hover:text-gray-800 text-sm"
+                                  className="text-gray-600 hover:text-gray-800 p-2 hover:bg-gray-200 rounded"
+                                  title="Edit Team"
                                 >
-                                  Edit
+                                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                  </svg>
                                 </button>
                                 {(user.role === 'admin' || user.role === 'superadmin') && (
                                   <button
                                     onClick={() => handleDeleteTeam(selectedTeam.id)}
-                                    className="text-red-600 hover:text-red-800 text-sm"
+                                    className="text-red-600 hover:text-red-800 p-2 hover:bg-red-50 rounded"
+                                    title="Delete Team"
                                   >
-                                    Delete
+                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                    </svg>
                                   </button>
                                 )}
                               </>
@@ -5973,18 +5898,18 @@ const App = () => {
                         </div>
                       </div>
 
-                      {/* Team Members */}
-                      <div className="flex-shrink-0 p-4 border-b border-gray-200 bg-gray-25">
-                        <h4 className="text-sm font-medium text-gray-700 mb-2">Team Members</h4>
-                        <div className="flex flex-wrap gap-2">
+                      {/* Team Members - Mobile Responsive */}
+                      <div className="flex-shrink-0 p-3 md:p-4 border-b border-gray-200 bg-gray-25">
+                        <h4 className="text-xs md:text-sm font-medium text-gray-700 mb-2">Team Members</h4>
+                        <div className="flex flex-wrap gap-1.5 md:gap-2">
                           {getTeamMembers(selectedTeam).map((member) => (
                             member && member.id ? (
-                              <div key={member.id} className="flex items-center space-x-1 bg-gray-100 rounded-full px-3 py-1">
+                              <div key={member.id} className="flex items-center space-x-1 bg-gray-100 rounded-full px-2 md:px-3 py-1">
                                 <span className="text-xs text-gray-700">{member.username || 'Unknown User'}</span>
                                 {canManageTeam(selectedTeam) && member.id !== selectedTeam.manager_id && (
                                   <button
                                     onClick={() => handleRemoveTeamMember(selectedTeam.id, member.id)}
-                                    className="text-red-500 hover:text-red-700 text-xs"
+                                    className="text-red-500 hover:text-red-700 text-sm ml-1"
                                   >
                                     ×
                                   </button>
@@ -5993,7 +5918,7 @@ const App = () => {
                             ) : null
                           ))}
                           {selectedTeam.manager_username && (
-                            <div className="flex items-center space-x-1 bg-purple-100 rounded-full px-3 py-1">
+                            <div className="flex items-center space-x-1 bg-purple-100 rounded-full px-2 md:px-3 py-1">
                               <span className="text-xs text-purple-700">{selectedTeam.manager_username} (Manager)</span>
                             </div>
                           )}
@@ -6319,12 +6244,12 @@ const App = () => {
               </div>
             )}
 
-            {/* Users View */}
+            {/* Users View - Mobile Responsive */}
             {currentView === 'users' && (user.role === 'admin' || user.role === 'superadmin') && (
-              <div className="space-y-6">
-                <div className="flex justify-between items-center">
-                  <h2 className="text-xl font-semibold text-gray-900">Users Management</h2>
-                  <div className="flex space-x-3">
+              <div className="space-y-4 md:space-y-6 w-full max-w-full overflow-x-hidden">
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
+                  <h2 className="text-lg md:text-xl font-semibold text-gray-900">Users Management</h2>
+                  <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 w-full sm:w-auto">
                       <select
                         onChange={(e) => {
                           if (e.target.value) {
@@ -6332,7 +6257,7 @@ const App = () => {
                             e.target.value = '';
                           }
                         }}
-                      className="bg-green-600 text-white px-6 py-2.5 rounded-md text-sm font-medium hover:bg-green-700 transition-colors min-w-[120px]"
+                      className="bg-green-600 text-white px-4 md:px-6 py-2 md:py-2.5 rounded-md text-xs md:text-sm font-medium hover:bg-green-700 transition-colors w-full sm:w-auto sm:min-w-[120px]"
                       >
                         <option value="">Export Users</option>
                         <option value="csv">CSV</option>
@@ -6342,50 +6267,52 @@ const App = () => {
                       </select>
                     <button
                       onClick={() => setCurrentView('create-user')}
-                      className="bg-blue-600 text-white px-6 py-2.5 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors min-w-[120px]"
+                      className="bg-blue-600 text-white px-4 md:px-6 py-2 md:py-2.5 rounded-md text-xs md:text-sm font-medium hover:bg-blue-700 transition-colors w-full sm:w-auto sm:min-w-[120px]"
                     >
                       + Create User
                     </button>
                   </div>
                 </div>
                 
-                <div className="bg-white rounded-lg shadow">
-                  <div className="p-6">
-                    <div className="space-y-4">
+                <div className="bg-white rounded-lg shadow w-full max-w-full overflow-hidden">
+                  <div className="p-4 md:p-6">
+                    <div className="space-y-3 md:space-y-4">
                       {visibleUsers.map((userData) => (
-                        <div key={userData.id} className="border rounded-lg p-4 hover:bg-gray-50">
-                          <div className="flex items-center justify-between">
-                            <div className="flex-1">
+                        <div key={userData.id} className="border rounded-lg p-3 md:p-4 hover:bg-gray-50">
+                          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
+                            <div className="flex-1 min-w-0">
                               {editingUser?.id === userData.id ? (
-                                <div className="flex items-center space-x-2">
+                                <div className="flex flex-col sm:flex-row sm:items-center gap-2">
                                   <input
                                     type="text"
                                     value={newUsername}
                                     onChange={(e) => setNewUsername(e.target.value)}
-                                    className="text-lg font-medium border border-gray-300 rounded px-2 py-1"
+                                    className="text-base md:text-lg font-medium border border-gray-300 rounded px-2 py-1 w-full sm:w-auto"
                                     placeholder="Enter new username"
                                   />
-                                  <button
-                                    onClick={() => updateUsername(userData.id, newUsername)}
-                                    className="text-green-600 hover:text-green-900 text-sm font-medium"
-                                  >
-                                    Save
-                                  </button>
-                                  <button
-                                    onClick={() => {
-                                      setEditingUser(null);
-                                      setNewUsername('');
-                                    }}
-                                    className="text-gray-600 hover:text-gray-900 text-sm font-medium"
-                                  >
-                                    Cancel
-                                  </button>
+                                  <div className="flex gap-2">
+                                    <button
+                                      onClick={() => updateUsername(userData.id, newUsername)}
+                                      className="text-green-600 hover:text-green-900 text-xs md:text-sm font-medium px-3 py-1 border border-green-200 rounded hover:bg-green-50"
+                                    >
+                                      Save
+                                    </button>
+                                    <button
+                                      onClick={() => {
+                                        setEditingUser(null);
+                                        setNewUsername('');
+                                      }}
+                                      className="text-gray-600 hover:text-gray-900 text-xs md:text-sm font-medium px-3 py-1 border border-gray-200 rounded hover:bg-gray-50"
+                                    >
+                                      Cancel
+                                    </button>
+                                  </div>
                                 </div>
                               ) : (
-                                <h3 className="text-lg font-medium text-gray-900">{userData.username}</h3>
+                                <h3 className="text-base md:text-lg font-medium text-gray-900 truncate">{userData.username}</h3>
                               )}
-                              <p className="text-sm text-gray-600 mt-1">{userData.email}</p>
-                              <div className="flex items-center space-x-2 mt-2">
+                              <p className="text-xs md:text-sm text-gray-600 mt-1 truncate">{userData.email}</p>
+                              <div className="flex items-center flex-wrap gap-2 mt-2">
                                 <span className={`inline-block px-2 py-1 text-xs rounded-full ${
                                   userData.role === 'superadmin' ? 'bg-red-100 text-red-800' :
                                   userData.role === 'admin' ? 'bg-purple-100 text-purple-800' : 
@@ -6398,16 +6325,16 @@ const App = () => {
                                 )}
                               </div>
                             </div>
-                            <div className="flex items-center space-x-2 ml-4">
+                            <div className="flex flex-wrap gap-2 lg:ml-4">
                               {editingUser?.id !== userData.id && !(userData.role === 'superadmin' && user.role !== 'superadmin') && (
                                 <button
                                   onClick={() => {
                                     setEditingUser(userData);
                                     setNewUsername(userData.username);
                                   }}
-                                  className="text-purple-600 hover:text-purple-900 text-sm font-medium"
+                                  className="text-purple-600 hover:text-purple-900 text-xs md:text-sm font-medium px-3 py-1.5 border border-purple-200 rounded hover:bg-purple-50 whitespace-nowrap"
                                 >
-                                  Edit Username
+                                  ✏️ Edit Username
                                 </button>
                               )}
                               {!(userData.role === 'superadmin' && user.role !== 'superadmin') && (
@@ -6416,9 +6343,9 @@ const App = () => {
                                     setUserToReset(userData);
                                     setShowPasswordResetModal(true);
                                   }}
-                                  className="text-blue-600 hover:text-blue-900 text-sm font-medium"
+                                  className="text-blue-600 hover:text-blue-900 text-xs md:text-sm font-medium px-3 py-1.5 border border-blue-200 rounded hover:bg-blue-50 whitespace-nowrap"
                                 >
-                                  Reset Password
+                                  🔑 Reset Password
                                 </button>
                               )}
                               {userData.role !== 'admin' && userData.role !== 'superadmin' && (
@@ -6428,9 +6355,9 @@ const App = () => {
                                       deleteUser(userData.id);
                                     }
                                   }}
-                                  className="text-red-600 hover:text-red-900 text-sm font-medium"
+                                  className="text-red-600 hover:text-red-900 text-xs md:text-sm font-medium px-3 py-1.5 border border-red-200 rounded hover:bg-red-50 whitespace-nowrap"
                                 >
-                                  Delete
+                                  🗑️ Delete
                                 </button>
                               )}
                             </div>
@@ -6443,35 +6370,35 @@ const App = () => {
               </div>
             )}
 
-            {/* Create User View */}
+            {/* Create User View - Mobile Responsive */}
             {currentView === 'create-user' && (user.role === 'admin' || user.role === 'superadmin') && (
-              <div className="max-w-2xl">
+              <div className="w-full max-w-2xl mx-auto px-4 sm:px-0">
                 <div className="bg-white rounded-lg shadow">
-                  <div className="p-6">
-                    <h2 className="text-xl font-semibold text-gray-900 mb-6">Create New User</h2>
-                    <form onSubmit={handleCreateUser} className="space-y-6">
+                  <div className="p-4 md:p-6">
+                    <h2 className="text-lg md:text-xl font-semibold text-gray-900 mb-4 md:mb-6">Create New User</h2>
+                    <form onSubmit={handleCreateUser} className="space-y-4 md:space-y-6">
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Username</label>
+                        <label className="block text-xs md:text-sm font-medium text-gray-700 mb-1">Username</label>
                         <input
                           type="text"
                           required
-                          className="w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                          className="w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"
                           value={userForm.username}
                           onChange={(e) => setUserForm({ ...userForm, username: e.target.value })}
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                        <label className="block text-xs md:text-sm font-medium text-gray-700 mb-1">Email</label>
                         <input
                           type="email"
                           required
-                          className="w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                          className="w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"
                           value={userForm.email}
                           onChange={(e) => setUserForm({ ...userForm, email: e.target.value })}
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                        <label className="block text-xs md:text-sm font-medium text-gray-700 mb-1">Password</label>
                         <PasswordInput
                           value={userForm.password}
                           onChange={(e) => setUserForm({ ...userForm, password: e.target.value })}
@@ -6480,9 +6407,9 @@ const App = () => {
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Role</label>
+                        <label className="block text-xs md:text-sm font-medium text-gray-700 mb-1">Role</label>
                         <select
-                          className="w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                          className="w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"
                           value={userForm.role}
                           onChange={(e) => setUserForm({ ...userForm, role: e.target.value })}
                         >
@@ -6493,18 +6420,18 @@ const App = () => {
                           )}
                         </select>
                       </div>
-                      <div className="flex justify-end space-x-3">
+                      <div className="flex flex-col sm:flex-row justify-end gap-2 sm:gap-3 pt-2">
                         <button
                           type="button"
                           onClick={() => setCurrentView('users')}
-                          className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300"
+                          className="w-full sm:w-auto px-4 py-2 text-xs md:text-sm font-medium text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300"
                         >
                           Cancel
                         </button>
                         <button
                           type="submit"
                           disabled={isLoading}
-                          className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 disabled:opacity-50"
+                          className="w-full sm:w-auto px-4 py-2 text-xs md:text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 disabled:opacity-50"
                         >
                           {isLoading ? 'Creating...' : 'Create User'}
                         </button>
@@ -6515,29 +6442,29 @@ const App = () => {
               </div>
             )}
 
-            {/* Analytics View */}
+            {/* Analytics View - Mobile Responsive */}
             {currentView === 'analytics' && (
-              <div className="space-y-8">
-                {/* Role-based Analytics Notice */}
-                <div className={`border rounded-lg p-4 mb-6 ${
+              <div className="space-y-4 md:space-y-8">
+                {/* Role-based Analytics Notice - Mobile Responsive */}
+                <div className={`border rounded-lg p-3 md:p-4 ${
                   user.role === 'admin' || user.role === 'superadmin'
                     ? 'bg-green-50 border-green-200' 
                     : 'bg-blue-50 border-blue-200'
                 }`}>
-                  <div className="flex items-center">
-                    <div className="flex-shrink-0">
+                  <div className="flex items-start md:items-center">
+                    <div className="flex-shrink-0 mt-0.5 md:mt-0">
                       {user.role === 'admin' || user.role === 'superadmin' ? (
-                        <svg className="w-5 h-5 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                        <svg className="w-4 h-4 md:w-5 md:h-5 text-green-400" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" clipRule="evenodd"/>
                         </svg>
                       ) : (
-                        <svg className="w-5 h-5 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
+                        <svg className="w-4 h-4 md:w-5 md:h-5 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd"/>
                         </svg>
                       )}
                     </div>
-                    <div className="ml-3">
-                      <p className={`text-sm ${
+                    <div className="ml-2 md:ml-3">
+                      <p className={`text-xs md:text-sm ${
                         user.role === 'admin' || user.role === 'superadmin' 
                           ? 'text-green-700' 
                           : 'text-blue-700'
@@ -6556,34 +6483,39 @@ const App = () => {
                   </div>
                 </div>
                 
-                <div className="flex items-center space-x-4 mb-4">
-                  <span className="font-semibold">From:</span>
-                  <DatePicker
-                    selected={analyticsFrom}
-                    onChange={date => setAnalyticsFrom(date)}
-                    selectsStart
-                    startDate={analyticsFrom}
-                    endDate={analyticsTo}
-                    maxDate={analyticsTo || new Date()}
-                    className="border rounded px-2 py-1"
-                    dateFormat="yyyy-MM-dd"
-                    isClearable
-                    placeholderText="Start date"
-                  />
-                  <span className="font-semibold">To:</span>
-                  <DatePicker
-                    selected={analyticsTo}
-                    onChange={date => setAnalyticsTo(date)}
-                    selectsEnd
-                    startDate={analyticsFrom}
-                    endDate={analyticsTo}
-                    minDate={analyticsFrom}
-                    maxDate={new Date()}
-                    className="border rounded px-2 py-1"
-                    dateFormat="yyyy-MM-dd"
-                    isClearable
-                    placeholderText="End date"
-                  />
+                {/* Date Range Selector - Mobile Responsive */}
+                <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 bg-white p-3 md:p-4 rounded-lg shadow">
+                  <div className="flex items-center gap-2 flex-1">
+                    <span className="text-xs md:text-sm font-semibold whitespace-nowrap">From:</span>
+                    <DatePicker
+                      selected={analyticsFrom}
+                      onChange={date => setAnalyticsFrom(date)}
+                      selectsStart
+                      startDate={analyticsFrom}
+                      endDate={analyticsTo}
+                      maxDate={analyticsTo || new Date()}
+                      className="border rounded px-2 py-1 text-xs md:text-sm w-full"
+                      dateFormat="yyyy-MM-dd"
+                      isClearable
+                      placeholderText="Start date"
+                    />
+                  </div>
+                  <div className="flex items-center gap-2 flex-1">
+                    <span className="text-xs md:text-sm font-semibold whitespace-nowrap">To:</span>
+                    <DatePicker
+                      selected={analyticsTo}
+                      onChange={date => setAnalyticsTo(date)}
+                      selectsEnd
+                      startDate={analyticsFrom}
+                      endDate={analyticsTo}
+                      minDate={analyticsFrom}
+                      maxDate={new Date()}
+                      className="border rounded px-2 py-1 text-xs md:text-sm w-full"
+                      dateFormat="yyyy-MM-dd"
+                      isClearable
+                      placeholderText="End date"
+                    />
+                  </div>
                 </div>
                 {currentView === 'analytics' && (
                   <div className="mb-4">
@@ -6602,19 +6534,18 @@ const App = () => {
                   </div>
                 )}
                 {analyticsLoading ? (
-                  <div>Loading analytics...</div>
+                  <div className="flex items-center justify-center py-8 md:py-12">
+                    <div className="animate-spin rounded-full h-8 w-8 md:h-12 md:w-12 border-b-2 border-blue-600"></div>
+                    <span className="ml-3 text-sm md:text-base">Loading analytics...</span>
+                  </div>
                 ) : (
-                  <div className={`grid grid-cols-1 gap-8 ${
-                    user.role === 'admin' || user.role === 'superadmin' 
-                      ? 'md:grid-cols-2' 
-                      : 'md:grid-cols-2 lg:grid-cols-3'
-                  }`}>
-                    {/* Ticket Status Pie Chart */}
-                    <div className="bg-gradient-to-br from-white to-gray-100 rounded-2xl shadow-2xl p-6">
-                      <h3 className="text-lg font-semibold mb-2">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                    {/* Ticket Status Pie Chart - Mobile Responsive */}
+                    <div className="bg-white rounded-lg shadow-lg p-4 md:p-6">
+                      <h3 className="text-base md:text-lg font-semibold mb-3 md:mb-4 text-gray-800">
                         {user.role === 'admin' || user.role === 'superadmin' ? 'Ticket Status (All)' : 'My Ticket Status'}
                       </h3>
-                      <ResponsiveContainer width="100%" height={250}>
+                      <ResponsiveContainer width="100%" height={isMobile ? 220 : 280}>
                         <PieChart>
                           <Pie
                             data={Array.isArray(analyticsData.ticketStatus?.labels) && Array.isArray(analyticsData.ticketStatus?.values)
@@ -6626,74 +6557,58 @@ const App = () => {
                             nameKey="name"
                             cx="50%"
                             cy="50%"
-                            outerRadius={80}
-                            fill="url(#colorA)"
+                            outerRadius={isMobile ? 70 : 90}
+                            fill="#8884d8"
                             stroke="#fff"
                             strokeWidth={2}
-                            label
-                            filter="url(#shadow)"
+                            label={!isMobile}
                           >
-                            {(analyticsData.ticketStatus?.labels || []).filter(l => l === 'open' || l === 'closed').map((_, i) => (
-                              <Cell key={i} fill={["#8884d8", "#ff7f7f"][i % 2]} />
+                            {(analyticsData.ticketStatus?.labels || []).filter(l => l === 'open' || l === 'closed').map((label, i) => (
+                              <Cell key={i} fill={label === 'closed' ? '#ff7f7f' : '#8884d8'} />
                             ))}
                           </Pie>
                           <Tooltip />
-                          <Legend />
+                          <Legend wrapperStyle={{ fontSize: isMobile ? '11px' : '14px' }} />
                         </PieChart>
                       </ResponsiveContainer>
                     </div>
-                    {/* Ticket Trends Line Chart */}
-                    <div className="bg-gradient-to-br from-white to-gray-100 rounded-2xl shadow-2xl p-6">
-                      <h3 className="text-lg font-semibold mb-2">
+                    {/* Ticket Trends Line Chart - Mobile Responsive */}
+                    <div className="bg-white rounded-lg shadow-lg p-4 md:p-6">
+                      <h3 className="text-base md:text-lg font-semibold mb-3 md:mb-4 text-gray-800">
                         {user.role === 'admin' || user.role === 'superadmin' ? 'Ticket Trends (Organization)' : 'My Ticket Trends'}
                       </h3>
-                      <ResponsiveContainer width="100%" height={250}>
+                      <ResponsiveContainer width="100%" height={isMobile ? 220 : 280}>
                         <LineChart data={Array.isArray(analyticsData.ticketTrends?.labels) ? analyticsData.ticketTrends.labels.map((label, i) => ({
                           date: label,
                           created: analyticsData.ticketTrends.created[i],
                           resolved: analyticsData.ticketTrends.resolved[i]
                         })) : []}>
-                          <XAxis dataKey="date" />
-                          <YAxis />
+                          <XAxis dataKey="date" tick={{ fontSize: isMobile ? 10 : 12 }} />
+                          <YAxis tick={{ fontSize: isMobile ? 10 : 12 }} />
                           <Tooltip />
-                          <Legend />
-                          <defs>
-                            <linearGradient id="colorA" x1="0" y1="0" x2="0" y2="1">
-                              <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8}/>
-                              <stop offset="95%" stopColor="#8884d8" stopOpacity={0.2}/>
-                            </linearGradient>
-                            <linearGradient id="colorB" x1="0" y1="0" x2="0" y2="1">
-                              <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8}/>
-                              <stop offset="95%" stopColor="#82ca9d" stopOpacity={0.2}/>
-                            </linearGradient>
-                            <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
-                              <feDropShadow dx="0" dy="4" stdDeviation="4" floodColor="#000" floodOpacity="0.15" />
-                            </filter>
-                          </defs>
+                          <Legend wrapperStyle={{ fontSize: isMobile ? '11px' : '14px' }} />
                           <Line
                             type="monotone"
                             dataKey="created"
-                            stroke="url(#colorA)"
-                            strokeWidth={4}
-                            filter="url(#shadow)"
-                            dot={{ r: 6, stroke: '#fff', strokeWidth: 2, fill: '#8884d8', filter: 'url(#shadow)' }}
+                            stroke="#8884d8"
+                            strokeWidth={isMobile ? 2 : 3}
+                            dot={{ r: isMobile ? 3 : 4, fill: '#8884d8' }}
                           />
                           <Line
                             type="monotone"
                             dataKey="resolved"
-                            stroke="url(#colorB)"
-                            strokeWidth={4}
-                            filter="url(#shadow)"
-                            dot={{ r: 6, stroke: '#fff', strokeWidth: 2, fill: '#82ca9d', filter: 'url(#shadow)' }}
+                            stroke="#82ca9d"
+                            strokeWidth={isMobile ? 2 : 3}
+                            dot={{ r: isMobile ? 3 : 4, fill: '#82ca9d' }}
                           />
                         </LineChart>
                       </ResponsiveContainer>
                     </div>
-                    {/* Agent Performance Bar Chart - Admin Only */}
+                    {/* Agent Performance Bar Chart - Admin Only - Mobile Responsive */}
                     {(user.role === 'admin' || user.role === 'superadmin') && (
-                      <div className="bg-gradient-to-br from-white to-gray-100 rounded-2xl shadow-2xl p-6">
-                        <h3 className="text-lg font-semibold mb-2">Agent Performance</h3>
-                        <ResponsiveContainer width="100%" height={250}>
+                      <div className="bg-white rounded-lg shadow-lg p-4 md:p-6">
+                        <h3 className="text-base md:text-lg font-semibold mb-3 md:mb-4 text-gray-800">Agent Performance</h3>
+                        <ResponsiveContainer width="100%" height={isMobile ? 220 : 280}>
                           <BarChart data={Array.isArray(analyticsData.agentPerf?.labels)
                             ? analyticsData.agentPerf.labels.map((label, i) => ({
                                 name: label,
@@ -6701,29 +6616,29 @@ const App = () => {
                                 assigned: analyticsData.agentPerf.assigned[i]
                               }))
                             : []}>
-                            <XAxis dataKey="name" />
-                            <YAxis />
+                            <XAxis dataKey="name" tick={{ fontSize: isMobile ? 10 : 12 }} />
+                            <YAxis tick={{ fontSize: isMobile ? 10 : 12 }} />
                             <Tooltip />
-                            <Legend />
-                            <Bar dataKey="resolved" fill="#8884d8" />
-                            <Bar dataKey="assigned" fill="#ffc658" />
+                            <Legend wrapperStyle={{ fontSize: isMobile ? '11px' : '14px' }} />
+                            <Bar dataKey="resolved" fill="#8884d8" name="resolved" />
+                            <Bar dataKey="assigned" fill="#ffc658" name="assigned" />
                           </BarChart>
                         </ResponsiveContainer>
                       </div>
                     )}
-                    {/* Ticket Volume by Priority Bar Chart - Role-based */}
-                    <div className="bg-gradient-to-br from-white to-gray-100 rounded-2xl shadow-2xl p-6">
-                      <h3 className="text-lg font-semibold mb-2">
+                    {/* Ticket Volume by Priority Bar Chart - Role-based - Mobile Responsive */}
+                    <div className="bg-white rounded-lg shadow-lg p-4 md:p-6">
+                      <h3 className="text-base md:text-lg font-semibold mb-3 md:mb-4 text-gray-800">
                         {user.role === 'admin' || user.role === 'superadmin' 
                           ? 'Ticket Volume by Priority (All)' 
                           : 'My Tickets by Priority'}
                       </h3>
-                      <ResponsiveContainer width="100%" height={250}>
+                      <ResponsiveContainer width="100%" height={isMobile ? 220 : 280}>
                         <BarChart data={Array.isArray(priorityVolume) ? priorityVolume : []}>
-                          <XAxis dataKey="date" />
-                          <YAxis allowDecimals={false} />
+                          <XAxis dataKey="date" tick={{ fontSize: isMobile ? 10 : 12 }} />
+                          <YAxis allowDecimals={false} tick={{ fontSize: isMobile ? 10 : 12 }} />
                           <Tooltip />
-                          <Legend />
+                          <Legend wrapperStyle={{ fontSize: isMobile ? '11px' : '14px' }} />
                           <Bar dataKey="high" stackId="a" fill="#e53e3e" name="High" />
                           <Bar dataKey="medium" stackId="a" fill="#ecc94b" name="Medium" />
                           <Bar dataKey="low" stackId="a" fill="#38a169" name="Low" />
@@ -6740,65 +6655,69 @@ const App = () => {
               <ITInfrastructureHealthAdvanced token={token} user={user} />
             )}
 
-            {/* Reports View */}
+            {/* Reports View - Mobile Responsive */}
             {currentView === 'reports' && (
-              <div className="space-y-8">
-                {/* Date Range Selector and Controls */}
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center space-x-4">
-                    <span className="font-semibold">From:</span>
-                    <DatePicker
-                      selected={reportsFrom}
-                      onChange={date => setReportsFrom(date)}
-                      selectsStart
-                      startDate={reportsFrom}
-                      endDate={reportsTo}
-                      maxDate={reportsTo || new Date()}
-                      className="border rounded px-2 py-1"
-                      dateFormat="yyyy-MM-dd"
-                      isClearable
-                      placeholderText="Start date"
-                    />
-                    <span className="font-semibold">To:</span>
-                    <DatePicker
-                      selected={reportsTo}
-                      onChange={date => setReportsTo(date)}
-                      selectsEnd
-                      startDate={reportsFrom}
-                      endDate={reportsTo}
-                      minDate={reportsFrom}
-                      maxDate={new Date()}
-                      className="border rounded px-2 py-1"
-                      dateFormat="yyyy-MM-dd"
-                      isClearable
-                      placeholderText="End date"
-                    />
+              <div className="space-y-4 md:space-y-8">
+                {/* Date Range Selector and Controls - Mobile Responsive */}
+                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-4 bg-white p-3 md:p-4 rounded-lg shadow">
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 flex-1">
+                    <div className="flex items-center gap-2 flex-1">
+                      <span className="text-xs md:text-sm font-semibold whitespace-nowrap">From:</span>
+                      <DatePicker
+                        selected={reportsFrom}
+                        onChange={date => setReportsFrom(date)}
+                        selectsStart
+                        startDate={reportsFrom}
+                        endDate={reportsTo}
+                        maxDate={reportsTo || new Date()}
+                        className="border rounded px-2 py-1 text-xs md:text-sm w-full"
+                        dateFormat="yyyy-MM-dd"
+                        isClearable
+                        placeholderText="Start date"
+                      />
+                    </div>
+                    <div className="flex items-center gap-2 flex-1">
+                      <span className="text-xs md:text-sm font-semibold whitespace-nowrap">To:</span>
+                      <DatePicker
+                        selected={reportsTo}
+                        onChange={date => setReportsTo(date)}
+                        selectsEnd
+                        startDate={reportsFrom}
+                        endDate={reportsTo}
+                        minDate={reportsFrom}
+                        maxDate={new Date()}
+                        className="border rounded px-2 py-1 text-xs md:text-sm w-full"
+                        dateFormat="yyyy-MM-dd"
+                        isClearable
+                        placeholderText="End date"
+                      />
+                    </div>
                   </div>
                   
-                  <div className="flex items-center space-x-4">
+                  <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3">
                     <button
                       onClick={() => fetchReportsData(
                         reportsFrom instanceof Date ? reportsFrom.toISOString().slice(0, 10) : undefined,
                         reportsTo instanceof Date ? reportsTo.toISOString().slice(0, 10) : undefined
                       )}
-                      className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                      className="px-3 md:px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-xs md:text-sm font-medium"
                     >
                       🔄 Refresh
                     </button>
-                    <label className="flex items-center space-x-2">
+                    <label className="flex items-center gap-2 text-xs md:text-sm">
                       <input
                         type="checkbox"
                         checked={autoRefresh}
                         onChange={(e) => setAutoRefresh(e.target.checked)}
                         className="rounded"
                       />
-                      <span className="text-sm">Auto-refresh (30s)</span>
+                      <span className="whitespace-nowrap">Auto-refresh (30s)</span>
                     </label>
                   </div>
                 </div>
 
-                {/* Report Type Selector */}
-                <div className="flex space-x-2 mb-6">
+                {/* Report Type Selector - Mobile Responsive */}
+                <div className="flex flex-wrap gap-2">
                   {(() => {
                     const adminReports = [
                       { id: 'overview', name: 'Overview', icon: '📊' },
@@ -6817,23 +6736,23 @@ const App = () => {
                       <button
                         key={report.id}
                         onClick={() => setSelectedReport(report.id)}
-                        className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors ${
+                        className={`flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-2 rounded-lg transition-colors text-xs md:text-sm font-medium ${
                           selectedReport === report.id
-                            ? 'bg-blue-600 text-white'
+                            ? 'bg-blue-600 text-white shadow-md'
                             : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                         }`}
                       >
                         <span>{report.icon}</span>
-                        <span>{report.name}</span>
+                        <span className="whitespace-nowrap">{report.name}</span>
                       </button>
                     ));
                   })()}
                 </div>
 
                 {reportsLoading ? (
-                  <div className="flex items-center justify-center py-12">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600"></div>
-                    <span className="ml-3 text-lg">Loading reports...</span>
+                  <div className="flex items-center justify-center py-8 md:py-12">
+                    <div className="animate-spin rounded-full h-8 w-8 md:h-12 md:w-12 border-b-2 border-green-600"></div>
+                    <span className="ml-3 text-sm md:text-lg">Loading reports...</span>
                   </div>
                 ) : (
                   <div>
@@ -6925,29 +6844,29 @@ const App = () => {
                       </div>
                     )}
 
-                    {/* Daily Reports - Redesigned */}
+                    {/* Daily Reports - Mobile Responsive */}
                     {selectedReport === 'daily' && (
-                      <div className="space-y-8">
-                        {/* Role-based Header */}
-                        <div className={`rounded-xl p-6 ${
+                      <div className="space-y-4 md:space-y-8">
+                        {/* Role-based Header - Mobile Responsive */}
+                        <div className={`rounded-lg md:rounded-xl p-4 md:p-6 ${
                           user.role === 'admin' || user.role === 'superadmin'
                             ? 'bg-gradient-to-r from-purple-50 to-indigo-50 border border-purple-200'
                             : 'bg-gradient-to-r from-blue-50 to-cyan-50 border border-blue-200'
                         }`}>
-                          <div className="flex items-center justify-between">
+                          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                             <div>
-                              <h2 className="text-2xl font-bold text-gray-800">
+                              <h2 className="text-lg md:text-2xl font-bold text-gray-800">
                                 {user.role === 'admin' || user.role === 'superadmin' 
                                   ? '📊 Organization Daily Reports' 
                                   : '📅 My Daily Reports'}
                               </h2>
-                              <p className="text-gray-600 mt-1">
+                              <p className="text-xs md:text-sm text-gray-600 mt-1">
                                 {user.role === 'admin' || user.role === 'superadmin'
                                   ? 'Complete daily activity overview for all team members'
                                   : 'Your personal daily work summary and progress'}
                               </p>
                             </div>
-                            <div className={`px-4 py-2 rounded-full text-sm font-medium ${
+                            <div className={`px-3 md:px-4 py-1.5 md:py-2 rounded-full text-xs md:text-sm font-medium self-start sm:self-auto ${
                               user.role === 'admin' || user.role === 'superadmin'
                                 ? 'bg-purple-100 text-purple-800'
                                 : 'bg-blue-100 text-blue-800'
@@ -6957,70 +6876,70 @@ const App = () => {
                           </div>
                         </div>
 
-                        {/* Key Metrics Cards */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                          <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-blue-500">
+                        {/* Key Metrics Cards - Mobile Responsive */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
+                          <div className="bg-white rounded-lg md:rounded-xl shadow-lg p-4 md:p-6 border-l-4 border-blue-500">
                             <div className="flex items-center justify-between">
-                              <div>
-                                <p className="text-sm font-medium text-gray-600">
+                              <div className="flex-1 min-w-0">
+                                <p className="text-xs md:text-sm font-medium text-gray-600 truncate">
                                   {user.role === 'admin' || user.role === 'superadmin' ? 'Total Created' : 'My Created'}
                                 </p>
-                                <p className="text-3xl font-bold text-blue-600">
+                                <p className="text-2xl md:text-3xl font-bold text-blue-600">
                                   {Array.isArray(reportsData.ticketTrends) 
                                     ? reportsData.ticketTrends.reduce((sum, day) => sum + (day.open || 0) + (day.in_progress || 0) + (day.closed || 0), 0)
                                     : 0}
                                 </p>
                                 <p className="text-xs text-gray-500 mt-1">Tickets created</p>
                               </div>
-                              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                                <span className="text-2xl">📝</span>
+                              <div className="w-10 h-10 md:w-12 md:h-12 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <span className="text-xl md:text-2xl">📝</span>
                               </div>
                             </div>
                           </div>
 
-                          <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-green-500">
+                          <div className="bg-white rounded-lg md:rounded-xl shadow-lg p-4 md:p-6 border-l-4 border-green-500">
                             <div className="flex items-center justify-between">
-                              <div>
-                                <p className="text-sm font-medium text-gray-600">
+                              <div className="flex-1 min-w-0">
+                                <p className="text-xs md:text-sm font-medium text-gray-600 truncate">
                                   {user.role === 'admin' || user.role === 'superadmin' ? 'Total Resolved' : 'My Resolved'}
                                 </p>
-                                <p className="text-3xl font-bold text-green-600">
+                                <p className="text-2xl md:text-3xl font-bold text-green-600">
                                   {Array.isArray(reportsData.ticketTrends) 
                                     ? reportsData.ticketTrends.reduce((sum, day) => sum + (day.closed || 0), 0)
                                     : 0}
                                 </p>
                                 <p className="text-xs text-gray-500 mt-1">Tickets resolved</p>
                               </div>
-                              <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-                                <span className="text-2xl">✅</span>
+                              <div className="w-10 h-10 md:w-12 md:h-12 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <span className="text-xl md:text-2xl">✅</span>
                               </div>
                             </div>
                           </div>
 
-                          <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-orange-500">
+                          <div className="bg-white rounded-lg md:rounded-xl shadow-lg p-4 md:p-6 border-l-4 border-orange-500">
                             <div className="flex items-center justify-between">
-                              <div>
-                                <p className="text-sm font-medium text-gray-600">
+                              <div className="flex-1 min-w-0">
+                                <p className="text-xs md:text-sm font-medium text-gray-600 truncate">
                                   {user.role === 'admin' || user.role === 'superadmin' ? 'Total Open' : 'My Open'}
                                 </p>
-                                <p className="text-3xl font-bold text-orange-600">
+                                <p className="text-2xl md:text-3xl font-bold text-orange-600">
                                   {Array.isArray(reportsData.ticketTrends) 
                                     ? reportsData.ticketTrends.reduce((sum, day) => sum + (day.open || 0), 0)
                                     : 0}
                                 </p>
                                 <p className="text-xs text-gray-500 mt-1">Tickets pending</p>
                               </div>
-                              <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
-                                <span className="text-2xl">⏳</span>
+                              <div className="w-10 h-10 md:w-12 md:h-12 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <span className="text-xl md:text-2xl">⏳</span>
                               </div>
                             </div>
                           </div>
 
-                          <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-purple-500">
+                          <div className="bg-white rounded-lg md:rounded-xl shadow-lg p-4 md:p-6 border-l-4 border-purple-500">
                             <div className="flex items-center justify-between">
-                              <div>
-                                <p className="text-sm font-medium text-gray-600">Resolution Rate</p>
-                                <p className="text-3xl font-bold text-purple-600">
+                              <div className="flex-1 min-w-0">
+                                <p className="text-xs md:text-sm font-medium text-gray-600 truncate">Resolution Rate</p>
+                                <p className="text-2xl md:text-3xl font-bold text-purple-600">
                                   {(() => {
                                     const total = Array.isArray(reportsData.ticketTrends) 
                                       ? reportsData.ticketTrends.reduce((sum, day) => sum + (day.open || 0) + (day.in_progress || 0) + (day.closed || 0), 0)
@@ -7033,79 +6952,130 @@ const App = () => {
                                 </p>
                                 <p className="text-xs text-gray-500 mt-1">Success rate</p>
                               </div>
-                              <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
-                                <span className="text-2xl">📈</span>
+                              <div className="w-10 h-10 md:w-12 md:h-12 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <span className="text-xl md:text-2xl">📈</span>
                               </div>
                             </div>
                           </div>
                         </div>
 
-                        {/* Daily Trends Chart */}
-                        <div className="bg-white rounded-xl shadow-lg p-6">
-                          <div className="flex items-center justify-between mb-6">
-                            <h3 className="text-xl font-semibold text-gray-800">
+                        {/* Daily Trends Chart - Mobile Responsive */}
+                        <div className="bg-white rounded-lg md:rounded-xl shadow-lg p-4 md:p-6">
+                          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4 md:mb-6">
+                            <h3 className="text-base md:text-xl font-semibold text-gray-800">
                               {user.role === 'admin' || user.role === 'superadmin' 
                                 ? 'Organization Daily Activity Trends' 
                                 : 'My Daily Activity Trends'}
                             </h3>
-                            <div className="flex items-center space-x-2 text-sm text-gray-500">
-                              <span className="w-3 h-3 bg-blue-500 rounded-full"></span>
-                              <span>Created</span>
-                              <span className="w-3 h-3 bg-green-500 rounded-full ml-4"></span>
-                              <span>Resolved</span>
-                              <span className="w-3 h-3 bg-orange-500 rounded-full ml-4"></span>
-                              <span>Open</span>
+                            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs md:text-sm text-gray-500">
+                              <div className="flex items-center gap-1">
+                                <span className="w-2.5 h-2.5 md:w-3 md:h-3 bg-blue-500 rounded-full"></span>
+                                <span>Created</span>
+                              </div>
+                              <div className="flex items-center gap-1">
+                                <span className="w-2.5 h-2.5 md:w-3 md:h-3 bg-green-500 rounded-full"></span>
+                                <span>Resolved</span>
+                              </div>
+                              <div className="flex items-center gap-1">
+                                <span className="w-2.5 h-2.5 md:w-3 md:h-3 bg-orange-500 rounded-full"></span>
+                                <span>Open</span>
+                              </div>
                             </div>
                           </div>
-                          <ResponsiveContainer width="100%" height={400}>
+                          <ResponsiveContainer width="100%" height={isMobile ? 250 : 400}>
                             <LineChart data={Array.isArray(reportsData.ticketTrends) ? reportsData.ticketTrends : []}>
                               <XAxis 
                                 dataKey="date" 
-                                tick={{ fontSize: 12 }}
+                                tick={{ fontSize: isMobile ? 10 : 12 }}
                                 tickFormatter={(value) => new Date(value).toLocaleDateString()}
                               />
-                              <YAxis tick={{ fontSize: 12 }} />
+                              <YAxis tick={{ fontSize: isMobile ? 10 : 12 }} />
                               <Tooltip 
                                 labelFormatter={(value) => `Date: ${new Date(value).toLocaleDateString()}`}
                                 formatter={(value, name) => [value, name]}
                               />
-                              <Legend />
+                              <Legend wrapperStyle={{ fontSize: isMobile ? '11px' : '14px' }} />
                               <Line 
                                 type="monotone" 
                                 dataKey="open" 
                                 stroke="#f97316" 
-                                strokeWidth={3}
+                                strokeWidth={isMobile ? 2 : 3}
                                 name="Open Tickets"
-                                dot={{ fill: '#f97316', strokeWidth: 2, r: 4 }}
+                                dot={{ fill: '#f97316', strokeWidth: 2, r: isMobile ? 3 : 4 }}
                               />
                               <Line 
                                 type="monotone" 
                                 dataKey="closed" 
                                 stroke="#10b981" 
-                                strokeWidth={3}
+                                strokeWidth={isMobile ? 2 : 3}
                                 name="Resolved Tickets"
-                                dot={{ fill: '#10b981', strokeWidth: 2, r: 4 }}
+                                dot={{ fill: '#10b981', strokeWidth: 2, r: isMobile ? 3 : 4 }}
                               />
                               <Line 
                                 type="monotone" 
                                 dataKey="in_progress" 
                                 stroke="#3b82f6" 
-                                strokeWidth={3}
+                                strokeWidth={isMobile ? 2 : 3}
                                 name="In Progress"
-                                dot={{ fill: '#3b82f6', strokeWidth: 2, r: 4 }}
+                                dot={{ fill: '#3b82f6', strokeWidth: 2, r: isMobile ? 3 : 4 }}
                               />
                             </LineChart>
                           </ResponsiveContainer>
                         </div>
 
-                        {/* Daily Activity Table */}
-                        <div className="bg-white rounded-xl shadow-lg p-6">
-                          <h3 className="text-xl font-semibold text-gray-800 mb-6">
+                        {/* Daily Activity Table - Mobile Responsive */}
+                        <div className="bg-white rounded-lg md:rounded-xl shadow-lg p-4 md:p-6">
+                          <h3 className="text-base md:text-xl font-semibold text-gray-800 mb-4 md:mb-6">
                             {user.role === 'admin' || user.role === 'superadmin' 
                               ? 'Daily Activity Breakdown (All Users)' 
                               : 'My Daily Activity Breakdown'}
                           </h3>
-                          <div className="overflow-x-auto">
+                          
+                          {/* Mobile Card View */}
+                          <div className="block md:hidden space-y-3">
+                            {Array.isArray(reportsData.ticketTrends) && reportsData.ticketTrends.map((day, index) => {
+                              const total = (day.open || 0) + (day.in_progress || 0) + (day.closed || 0);
+                              const resolutionRate = total > 0 ? Math.round(((day.closed || 0) / total) * 100) : 0;
+                              
+                              return (
+                                <div key={index} className="border rounded-lg p-3 bg-gray-50">
+                                  <div className="flex justify-between items-center mb-2">
+                                    <span className="text-sm font-semibold text-gray-900">
+                                      {new Date(day.date).toLocaleDateString()}
+                                    </span>
+                                    <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                                      resolutionRate >= 80 ? 'bg-green-100 text-green-800' :
+                                      resolutionRate >= 60 ? 'bg-yellow-100 text-yellow-800' :
+                                      'bg-red-100 text-red-800'
+                                    }`}>
+                                      {resolutionRate}%
+                                    </span>
+                                  </div>
+                                  <div className="grid grid-cols-2 gap-2 text-xs">
+                                    <div className="flex justify-between">
+                                      <span className="text-gray-600">Open:</span>
+                                      <span className="text-orange-600 font-semibold">{day.open || 0}</span>
+                                    </div>
+                                    <div className="flex justify-between">
+                                      <span className="text-gray-600">In Progress:</span>
+                                      <span className="text-blue-600 font-semibold">{day.in_progress || 0}</span>
+                                    </div>
+                                    <div className="flex justify-between">
+                                      <span className="text-gray-600">Resolved:</span>
+                                      <span className="text-green-600 font-semibold">{day.closed || 0}</span>
+                                    </div>
+                                    <div className="flex justify-between">
+                                      <span className="text-gray-600">Total:</span>
+                                      <span className="text-gray-900 font-semibold">{total}</span>
+                                    </div>
+                                  </div>
+                                </div>
+                              );
+                            })}
+                          </div>
+                          
+                          {/* Desktop Table View */}
+                          <div className="hidden md:block overflow-x-auto">
                             <table className="min-w-full divide-y divide-gray-200">
                               <thead className="bg-gray-50">
                                 <tr>
@@ -7156,17 +7126,17 @@ const App = () => {
                           </div>
                         </div>
 
-                        {/* Export and Actions */}
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        {/* Export and Actions - Mobile Responsive */}
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
                           {/* Export Section */}
-                          <div className="bg-white rounded-xl shadow-lg p-6">
-                            <h3 className="text-lg font-semibold text-gray-800 mb-4">📥 Export Daily Reports</h3>
-                            <p className="text-sm text-gray-600 mb-4">
+                          <div className="bg-white rounded-lg md:rounded-xl shadow-lg p-4 md:p-6">
+                            <h3 className="text-base md:text-lg font-semibold text-gray-800 mb-3 md:mb-4">📥 Export Daily Reports</h3>
+                            <p className="text-xs md:text-sm text-gray-600 mb-3 md:mb-4">
                               {user.role === 'admin' || user.role === 'superadmin'
                                 ? 'Export comprehensive daily reports for all team members'
                                 : 'Export your personal daily activity reports'}
                             </p>
-                            <div className="grid grid-cols-2 gap-3">
+                            <div className="grid grid-cols-2 gap-2 md:gap-3">
                               {['csv', 'excel', 'pdf', 'json'].map(format => (
                                 <button
                                   key={format}
@@ -7347,106 +7317,193 @@ const App = () => {
 
             {/* Manage Groups View (Admin only) */}
             {currentView === 'manage-groups' && (user.role === 'admin' || user.role === 'superadmin') && (
-              <div className="space-y-6">
-                <h2 className="text-xl font-bold mb-4 flex items-center">
-                  <svg className="w-6 h-6 mr-2 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                  </svg>
-                  Manage All Groups
-                </h2>
-                <div className="bg-white rounded-lg shadow p-6">
-                  <div className="flex justify-between items-center mb-4">
-                    <h3 className="text-lg font-semibold">All Teams</h3>
-                    <div className="space-x-2">
-                      <button
-                        className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
-                        onClick={() => setCurrentView('teams')}
-                      >
-                        Create Team
-                      </button>
-                      <button
-                        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-                        onClick={() => setCurrentView('teams')}
-                      >
-                        Back to Teams
-                      </button>
+              <div className="w-full max-w-full overflow-x-hidden">
+                <div className="space-y-4 md:space-y-6">
+                  <h2 className="text-lg md:text-xl font-bold mb-4 flex items-center">
+                    <svg className="w-5 h-5 md:w-6 md:h-6 mr-2 text-yellow-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                    <span className="truncate">Manage All Groups</span>
+                  </h2>
+                  <div className="bg-white rounded-lg shadow p-4 md:p-6 w-full max-w-full overflow-hidden">
+                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-4">
+                      <h3 className="text-base md:text-lg font-semibold">All Teams</h3>
+                      <div className="flex flex-wrap gap-2">
+                        <button
+                          className="bg-green-600 text-white px-3 md:px-4 py-2 rounded hover:bg-green-700 text-sm md:text-base"
+                          onClick={() => setCurrentView('teams')}
+                        >
+                          Create Team
+                        </button>
+                        <button
+                          className="bg-blue-600 text-white px-3 md:px-4 py-2 rounded hover:bg-blue-700 text-sm md:text-base"
+                          onClick={() => setCurrentView('teams')}
+                        >
+                          Back to Teams
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                  <div className="overflow-x-auto">
-                    <table className="min-w-full divide-y divide-gray-200">
-                      <thead>
-                        <tr>
-                          <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Team Name</th>
-                          <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Description</th>
-                          <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Manager</th>
-                          <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Members</th>
-                          <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {teams.length > 0 ? (
-                          teams.map(team => (
-                            <tr key={team.id} className="hover:bg-gray-50">
-                              <td className="px-4 py-2 font-semibold">{team.name}</td>
-                              <td className="px-4 py-2">{team.description}</td>
-                              <td className="px-4 py-2">{team.manager_username}</td>
-                              <td className="px-4 py-2">
+                    
+                    {/* Mobile Card View */}
+                    <div className="block md:hidden space-y-3 w-full">
+                      {teams.length > 0 ? (
+                        teams.map(team => (
+                          <div key={team.id} className="border rounded-lg p-3 bg-gray-50">
+                            <div className="mb-2">
+                              <p className="font-semibold text-gray-900">{team.name}</p>
+                              <p className="text-xs text-gray-600 mt-1">{team.description}</p>
+                            </div>
+                            <div className="space-y-2 text-xs mb-3">
+                              <div className="flex justify-between">
+                                <span className="text-gray-500">Manager:</span>
+                                <span className="font-medium text-gray-900">{team.manager_username}</span>
+                              </div>
+                              <div>
+                                <span className="text-gray-500">Members:</span>
                                 {team.members && team.members.length > 0 ? (
-                                  <div className="flex flex-wrap gap-2">
+                                  <div className="flex flex-wrap gap-1 mt-1">
                                     {team.members.map(m => (
-                                      <span key={m.id} className="bg-gray-200 px-2 py-1 rounded text-xs">{m.username || m.id}</span>
+                                      <span key={m.id} className="bg-gray-200 px-2 py-0.5 rounded text-xs">{m.username || m.id}</span>
                                     ))}
                                   </div>
                                 ) : (
-                                  <span className="text-gray-400 text-xs">No members</span>
+                                  <p className="text-gray-400 text-xs mt-1">No members</p>
                                 )}
-                              </td>
-                              <td className="px-4 py-2 space-x-2">
-                                <button className="text-blue-600 hover:underline" onClick={() => { 
-                                setEditingTeam(team); 
-                                setEditTeamForm({ 
-                                  name: team.name, 
-                                  description: team.description, 
-                                  manager_id: (user.role === 'admin' || user.role === 'superadmin') ? team.manager_id : '' 
-                                }); 
-                              }}>
-                                  Edit
-                                </button>
-                                <button className="text-red-600 hover:underline" onClick={() => handleDeleteTeam(team.id)}>
-                                  Delete
-                                </button>
-                                <button className="text-green-600 hover:underline" onClick={() => { setTeamToAddMember(team); setShowAddMemberModal(true); }}>
-                                  Add Member
-                                </button>
-                                {team.members && team.members.length > 0 && (
-                                  <button className="text-yellow-600 hover:underline" onClick={() => { setSelectedTeam(team); }}>
-                                    Remove Member
-                                  </button>
-                                )}
-                              </td>
-                            </tr>
-                          ))
-                        ) : (
-                          <tr>
-                            <td colSpan="5" className="px-4 py-8 text-center text-gray-500">
-                              <div className="flex flex-col items-center">
-                                <svg className="w-12 h-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                                </svg>
-                                <p className="text-lg font-medium">No teams found</p>
-                                <p className="text-sm">Create your first team to get started</p>
-                                <button
-                                  className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-                                  onClick={() => setCurrentView('teams')}
-                                >
-                                  Create Team
-                                </button>
                               </div>
-                            </td>
-                          </tr>
-                        )}
-                      </tbody>
-                    </table>
+                            </div>
+                            <div className="flex flex-wrap gap-2">
+                              <button 
+                                className="text-blue-600 hover:underline text-xs" 
+                                onClick={() => { 
+                                  setEditingTeam(team); 
+                                  setEditTeamForm({ 
+                                    name: team.name, 
+                                    description: team.description, 
+                                    manager_id: (user.role === 'admin' || user.role === 'superadmin') ? team.manager_id : '' 
+                                  }); 
+                                }}
+                              >
+                                ✏️ Edit
+                              </button>
+                              <button 
+                                className="text-red-600 hover:underline text-xs" 
+                                onClick={() => handleDeleteTeam(team.id)}
+                              >
+                                🗑️ Delete
+                              </button>
+                              <button 
+                                className="text-green-600 hover:underline text-xs" 
+                                onClick={() => { setTeamToAddMember(team); setShowAddMemberModal(true); }}
+                              >
+                                ➕ Add Member
+                              </button>
+                              {team.members && team.members.length > 0 && (
+                                <button 
+                                  className="text-yellow-600 hover:underline text-xs" 
+                                  onClick={() => { setSelectedTeam(team); }}
+                                >
+                                  ➖ Remove Member
+                                </button>
+                              )}
+                            </div>
+                          </div>
+                        ))
+                      ) : (
+                        <div className="flex flex-col items-center py-8 text-center text-gray-500">
+                          <svg className="w-12 h-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                          </svg>
+                          <p className="text-base font-medium">No teams found</p>
+                          <p className="text-sm">Create your first team to get started</p>
+                          <button
+                            className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-sm"
+                            onClick={() => setCurrentView('teams')}
+                          >
+                            Create Team
+                          </button>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Desktop Table View */}
+                    <div className="hidden md:block w-full overflow-x-auto">
+                      <div className="inline-block min-w-full align-middle">
+                        <table className="min-w-full divide-y divide-gray-200">
+                          <thead>
+                            <tr>
+                              <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Team Name</th>
+                              <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Description</th>
+                              <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Manager</th>
+                              <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Members</th>
+                              <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {teams.length > 0 ? (
+                              teams.map(team => (
+                                <tr key={team.id} className="hover:bg-gray-50">
+                                  <td className="px-4 py-2 font-semibold">{team.name}</td>
+                                  <td className="px-4 py-2">{team.description}</td>
+                                  <td className="px-4 py-2">{team.manager_username}</td>
+                                  <td className="px-4 py-2">
+                                    {team.members && team.members.length > 0 ? (
+                                      <div className="flex flex-wrap gap-2">
+                                        {team.members.map(m => (
+                                          <span key={m.id} className="bg-gray-200 px-2 py-1 rounded text-xs">{m.username || m.id}</span>
+                                        ))}
+                                      </div>
+                                    ) : (
+                                      <span className="text-gray-400 text-xs">No members</span>
+                                    )}
+                                  </td>
+                                  <td className="px-4 py-2 space-x-2">
+                                    <button className="text-blue-600 hover:underline" onClick={() => { 
+                                    setEditingTeam(team); 
+                                    setEditTeamForm({ 
+                                      name: team.name, 
+                                      description: team.description, 
+                                      manager_id: (user.role === 'admin' || user.role === 'superadmin') ? team.manager_id : '' 
+                                    }); 
+                                  }}>
+                                      Edit
+                                    </button>
+                                    <button className="text-red-600 hover:underline" onClick={() => handleDeleteTeam(team.id)}>
+                                      Delete
+                                    </button>
+                                    <button className="text-green-600 hover:underline" onClick={() => { setTeamToAddMember(team); setShowAddMemberModal(true); }}>
+                                      Add Member
+                                    </button>
+                                    {team.members && team.members.length > 0 && (
+                                      <button className="text-yellow-600 hover:underline" onClick={() => { setSelectedTeam(team); }}>
+                                        Remove Member
+                                      </button>
+                                    )}
+                                  </td>
+                                </tr>
+                              ))
+                            ) : (
+                              <tr>
+                                <td colSpan="5" className="px-4 py-8 text-center text-gray-500">
+                                  <div className="flex flex-col items-center">
+                                    <svg className="w-12 h-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                                    </svg>
+                                    <p className="text-lg font-medium">No teams found</p>
+                                    <p className="text-sm">Create your first team to get started</p>
+                                    <button
+                                      className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+                                      onClick={() => setCurrentView('teams')}
+                                    >
+                                      Create Team
+                                    </button>
+                                  </div>
+                                </td>
+                              </tr>
+                            )}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

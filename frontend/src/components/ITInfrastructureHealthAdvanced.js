@@ -12,8 +12,18 @@ const ITInfrastructureHealthAdvanced = ({ token, user }) => {
   const [showModal, setShowModal] = useState(false);
   const [modalType, setModalType] = useState('');
   const [formData, setFormData] = useState({});
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
   const API_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
+
+  // Mobile detection
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useEffect(() => {
     fetchAllData();
@@ -297,131 +307,123 @@ const ITInfrastructureHealthAdvanced = ({ token, user }) => {
   }
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="bg-gradient-to-r from-blue-600 to-teal-600 rounded-lg p-6 text-white">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between">
-          <div>
-            <h1 className="text-2xl font-bold flex items-center text-white">
-              IT Infrastructure Management Center
-            </h1>
-            <p className="text-blue-100 mt-1 flex items-center gap-2">
-              <span className="flex items-center gap-1 bg-green-500/20 text-green-100 px-2 py-1 rounded-full text-xs font-medium">
-                <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-                Realtime Data
-              </span>
-              <span>Comprehensive IT infrastructure monitoring, management, and procurement system</span>
-            </p>
+    <div className="w-full overflow-hidden">
+      <div className="w-full max-w-full">
+        <div className="space-y-4 md:space-y-6">
+          {/* Header - Mobile Responsive */}
+          <div className="bg-gradient-to-r from-blue-600 to-teal-600 rounded-lg p-4 md:p-6 text-white w-full max-w-full">
+            <div className="w-full">
+              <h1 className="text-lg md:text-2xl font-bold text-white break-words">
+                IT Infrastructure Management Center
+              </h1>
+              <div className="flex flex-col sm:flex-row sm:items-center gap-2 mt-2 w-full">
+                <span className="flex items-center gap-1 bg-green-500/20 text-green-100 px-2 py-1 rounded-full text-xs font-medium w-fit">
+                  <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                  Realtime Data
+                </span>
+                <span className="text-xs md:text-sm text-blue-100 break-words">Comprehensive IT infrastructure monitoring, management, and procurement system</span>
+              </div>
+            </div>
           </div>
-          <div className="mt-4 md:mt-0 flex flex-wrap gap-2">
-            <button
-              onClick={fetchAllData}
-              className="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg text-sm font-medium transition-colors"
-            >
-              🔄 Refresh All
-            </button>
+
+          {/* Navigation Tabs - Mobile Responsive */}
+          <div className="bg-white rounded-lg shadow-md w-full max-w-full">
+            <div className="p-2 md:p-0">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:flex md:border-b md:border-gray-200 gap-2 md:gap-0">
+                {[
+                  { id: 'dashboard', name: '📊 Dashboard', icon: '📊' },
+                  { id: 'firewalls', name: '🔥 Firewalls', icon: '🔥' },
+                  { id: 'vendors', name: '🏢 Vendors', icon: '🏢' },
+                  { id: 'downtimes', name: '⏰ Downtimes', icon: '⏰' },
+                  { id: 'servers', name: '🖥️ Servers', icon: '🖥️' },
+                  { id: 'procurement', name: '📦 Procurement', icon: '📦' }
+                ].map((tab) => (
+                  <button
+                    key={tab.id}
+                    onClick={() => setActiveTab(tab.id)}
+                    className={`py-2 md:py-4 px-2 md:px-4 font-medium text-xs md:text-sm rounded md:rounded-none md:border-b-2 ${
+                      activeTab === tab.id
+                        ? 'bg-blue-600 text-white md:bg-transparent md:border-blue-500 md:text-blue-600'
+                        : 'bg-gray-100 text-gray-700 md:bg-transparent md:border-transparent md:text-gray-500 hover:bg-gray-200 md:hover:bg-transparent md:hover:text-gray-700 md:hover:border-gray-300'
+                    }`}
+                  >
+                    {tab.name}
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
 
-      {/* Navigation Tabs */}
-      <div className="bg-white rounded-lg shadow-md">
-        <div className="border-b border-gray-200">
-          <nav className="flex space-x-8 px-6" aria-label="Tabs">
-            {[
-              { id: 'dashboard', name: '📊 Dashboard', icon: '📊' },
-              { id: 'firewalls', name: '🔥 Firewalls', icon: '🔥' },
-              { id: 'vendors', name: '🏢 Vendors', icon: '🏢' },
-              { id: 'downtimes', name: '⏰ Downtimes', icon: '⏰' },
-              { id: 'servers', name: '🖥️ Servers', icon: '🖥️' },
-              { id: 'procurement', name: '📦 Procurement', icon: '📦' }
-            ].map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`py-4 px-1 border-b-2 font-medium text-sm ${
-                  activeTab === tab.id
-                    ? 'border-blue-500 text-blue-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                }`}
-              >
-                {tab.name}
-              </button>
-            ))}
-          </nav>
-        </div>
-      </div>
-
-      {/* Dashboard Tab */}
-      {activeTab === 'dashboard' && (
-        <div className="space-y-6">
-          {/* Key Metrics Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-red-500">
+          {/* Dashboard Tab - Mobile Responsive */}
+          {activeTab === 'dashboard' && (
+            <div className="space-y-4 md:space-y-6 w-full max-w-full">
+              {/* Key Metrics Cards - Mobile Responsive */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6 w-full">
+            <div className="bg-white rounded-lg shadow-md p-4 md:p-6 border-l-4 border-red-500">
               <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-600">System Outages</p>
-                  <p className="text-2xl font-bold text-gray-900">{(healthData && healthData.summary) ? healthData.summary.totalOutages : 0}</p>
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs md:text-sm font-medium text-gray-600 truncate">System Outages</p>
+                  <p className="text-xl md:text-2xl font-bold text-gray-900">{(healthData && healthData.summary) ? healthData.summary.totalOutages : 0}</p>
                   <p className="text-xs text-red-600 mt-1">{(healthData && healthData.summary) ? healthData.summary.outageHours : 0} hours downtime</p>
                 </div>
-                <div className="p-3 bg-red-100 rounded-full">
-                  <span className="text-2xl">⚠️</span>
+                <div className="p-2 md:p-3 bg-red-100 rounded-full flex-shrink-0">
+                  <span className="text-xl md:text-2xl">⚠️</span>
                 </div>
               </div>
             </div>
 
-            <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-blue-500">
+            <div className="bg-white rounded-lg shadow-md p-4 md:p-6 border-l-4 border-blue-500">
               <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-600">Active Servers</p>
-                  <p className="text-2xl font-bold text-gray-900">{servers.filter(s => s.status === 'Running').length}</p>
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs md:text-sm font-medium text-gray-600 truncate">Active Servers</p>
+                  <p className="text-xl md:text-2xl font-bold text-gray-900">{servers.filter(s => s.status === 'Running').length}</p>
                   <p className="text-xs text-blue-600 mt-1">{servers.length} total servers</p>
                 </div>
-                <div className="p-3 bg-blue-100 rounded-full">
-                  <span className="text-2xl">🖥️</span>
+                <div className="p-2 md:p-3 bg-blue-100 rounded-full flex-shrink-0">
+                  <span className="text-xl md:text-2xl">🖥️</span>
                 </div>
               </div>
             </div>
 
-            <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-yellow-500">
+            <div className="bg-white rounded-lg shadow-md p-4 md:p-6 border-l-4 border-yellow-500">
               <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-600">Expiring Licenses</p>
-                  <p className="text-2xl font-bold text-gray-900">{firewalls.filter(f => getExpiryStatus(f.license_expiry).color.includes('yellow')).length}</p>
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs md:text-sm font-medium text-gray-600 truncate">Expiring Licenses</p>
+                  <p className="text-xl md:text-2xl font-bold text-gray-900">{firewalls.filter(f => getExpiryStatus(f.license_expiry).color.includes('yellow')).length}</p>
                   <p className="text-xs text-yellow-600 mt-1">Within 30 days</p>
                 </div>
-                <div className="p-3 bg-yellow-100 rounded-full">
-                  <span className="text-2xl">⏰</span>
+                <div className="p-2 md:p-3 bg-yellow-100 rounded-full flex-shrink-0">
+                  <span className="text-xl md:text-2xl">⏰</span>
                 </div>
               </div>
             </div>
 
-            <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-green-500">
+            <div className="bg-white rounded-lg shadow-md p-4 md:p-6 border-l-4 border-green-500">
               <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-600">Pending Procurements</p>
-                  <p className="text-2xl font-bold text-gray-900">{procurements.filter(p => p.status === 'Pending').length}</p>
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs md:text-sm font-medium text-gray-600 truncate">Pending Procurements</p>
+                  <p className="text-xl md:text-2xl font-bold text-gray-900">{procurements.filter(p => p.status === 'Pending').length}</p>
                   <p className="text-xs text-green-600 mt-1">${procurements.filter(p => p.status === 'Pending').reduce((sum, p) => sum + p.total_price, 0).toLocaleString()}</p>
                 </div>
-                <div className="p-3 bg-green-100 rounded-full">
-                  <span className="text-2xl">📦</span>
+                <div className="p-2 md:p-3 bg-green-100 rounded-full flex-shrink-0">
+                  <span className="text-xl md:text-2xl">📦</span>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Recent Activity */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">🚨 Recent Downtimes</h3>
-              <div className="space-y-3">
+          {/* Recent Activity - Mobile Responsive */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
+            <div className="bg-white rounded-lg shadow-md p-4 md:p-6">
+              <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-3 md:mb-4">🚨 Recent Downtimes</h3>
+              <div className="space-y-2 md:space-y-3">
                 {downtimes.slice(0, 3).map((downtime) => (
-                  <div key={downtime.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                    <div>
-                      <p className="font-medium text-gray-900">{downtime.system}</p>
-                      <p className="text-sm text-gray-600">{downtime.duration} - {downtime.reason}</p>
+                  <div key={downtime.id} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 p-3 bg-gray-50 rounded-lg">
+                    <div className="flex-1 min-w-0">
+                      <p className="font-medium text-sm md:text-base text-gray-900 truncate">{downtime.system}</p>
+                      <p className="text-xs md:text-sm text-gray-600 truncate">{downtime.duration} - {downtime.reason}</p>
                     </div>
-                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                    <span className={`px-2 py-1 rounded-full text-xs font-medium self-start sm:self-auto ${
                       downtime.impact === 'High' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800'
                     }`}>
                       {downtime.impact}
@@ -431,18 +433,18 @@ const ITInfrastructureHealthAdvanced = ({ token, user }) => {
               </div>
             </div>
 
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">🔥 Firewall Status</h3>
-              <div className="space-y-3">
+            <div className="bg-white rounded-lg shadow-md p-4 md:p-6">
+              <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-3 md:mb-4">🔥 Firewall Status</h3>
+              <div className="space-y-2 md:space-y-3">
                 {firewalls.slice(0, 3).map((firewall) => {
                   const expiry = getExpiryStatus(firewall.license_expiry);
                   return (
-                    <div key={firewall.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                      <div>
-                        <p className="font-medium text-gray-900">{firewall.name}</p>
-                        <p className="text-sm text-gray-600">{firewall.brand} - {firewall.ip}</p>
+                    <div key={firewall.id} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 p-3 bg-gray-50 rounded-lg">
+                      <div className="flex-1 min-w-0">
+                        <p className="font-medium text-sm md:text-base text-gray-900 truncate">{firewall.name}</p>
+                        <p className="text-xs md:text-sm text-gray-600 truncate">{firewall.brand} - {firewall.ip}</p>
                       </div>
-                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${expiry.color}`}>
+                      <span className={`px-2 py-1 rounded-full text-xs font-medium self-start sm:self-auto ${expiry.color}`}>
                         {expiry.status}
                       </span>
                     </div>
@@ -454,291 +456,516 @@ const ITInfrastructureHealthAdvanced = ({ token, user }) => {
         </div>
       )}
 
-      {/* Firewalls Tab */}
-      {activeTab === 'firewalls' && (
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-xl font-semibold text-gray-900">🔥 Firewall Management</h2>
-            <button
-              onClick={() => openModal('firewall')}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium"
-            >
-              ➕ Add Firewall
-            </button>
+          {/* Firewalls Tab - Mobile Responsive */}
+          {activeTab === 'firewalls' && (
+            <div className="bg-white rounded-lg shadow-md p-4 md:p-6 w-full max-w-full overflow-hidden">
+              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-4 md:mb-6">
+                <h2 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900">🔥 Firewall Management</h2>
+                <button
+                  onClick={() => openModal('firewall')}
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-xs md:text-sm font-medium w-full sm:w-auto whitespace-nowrap"
+                >
+                  ➕ Add Firewall
+                </button>
+              </div>
+          
+          {/* Mobile Card View */}
+          <div className="block md:hidden space-y-3 w-full">
+            {firewalls.map((firewall) => {
+              const expiry = getExpiryStatus(firewall.license_expiry);
+              return (
+                <div key={firewall.id} className="border rounded-lg p-3 bg-gray-50">
+                  <div className="flex justify-between items-start mb-2">
+                    <div className="flex-1 min-w-0">
+                      <p className="font-semibold text-gray-900 truncate">{firewall.name}</p>
+                      <p className="text-xs text-gray-600 truncate">{firewall.brand}</p>
+                    </div>
+                    <span className={`px-2 py-1 rounded-full text-xs font-medium ml-2 ${getStatusColor(firewall.status)}`}>
+                      {firewall.status}
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-2 text-xs mb-2">
+                    <div>
+                      <span className="text-gray-500">IP:</span>
+                      <p className="font-medium text-gray-900">{firewall.ip}</p>
+                    </div>
+                    <div>
+                      <span className="text-gray-500">License:</span>
+                      <span className={`inline-block px-2 py-0.5 rounded-full text-xs font-medium ${expiry.color}`}>
+                        {expiry.status}
+                      </span>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => openModal('firewall', firewall)}
+                    className="w-full mt-2 text-blue-600 hover:text-blue-900 text-sm font-medium py-1 border border-blue-200 rounded hover:bg-blue-50"
+                  >
+                    ✏️ Edit
+                  </button>
+                </div>
+              );
+            })}
           </div>
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Brand</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">IP Address</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">License Expiry</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {firewalls.map((firewall) => {
-                  const expiry = getExpiryStatus(firewall.license_expiry);
-                  return (
-                    <tr key={firewall.id} className="hover:bg-gray-50">
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{firewall.name}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{firewall.brand}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{firewall.ip}</td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${expiry.color}`}>
-                          {expiry.status}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(firewall.status)}`}>
-                          {firewall.status}
-                        </span>
-                      </td>
+          
+          {/* Desktop Table View */}
+          <div className="hidden md:block w-full overflow-x-auto">
+            <div className="inline-block min-w-full align-middle">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Brand</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">IP Address</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">License Expiry</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {firewalls.map((firewall) => {
+                    const expiry = getExpiryStatus(firewall.license_expiry);
+                    return (
+                      <tr key={firewall.id} className="hover:bg-gray-50">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{firewall.name}</td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{firewall.brand}</td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{firewall.ip}</td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <span className={`px-2 py-1 rounded-full text-xs font-medium ${expiry.color}`}>
+                            {expiry.status}
+                          </span>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(firewall.status)}`}>
+                            {firewall.status}
+                          </span>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                          <button
+                            onClick={() => openModal('firewall', firewall)}
+                            className="text-blue-600 hover:text-blue-900 mr-3"
+                          >
+                            ✏️ Edit
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      )}
+
+          {/* Vendors Tab - Mobile Responsive */}
+          {activeTab === 'vendors' && (
+            <div className="bg-white rounded-lg shadow-md p-4 md:p-6 w-full max-w-full overflow-hidden">
+              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-4 md:mb-6">
+                <h2 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900">🏢 Vendor Management</h2>
+                <button
+                  onClick={() => openModal('vendor')}
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-xs md:text-sm font-medium w-full sm:w-auto whitespace-nowrap"
+                >
+                  ➕ Add Vendor
+                </button>
+              </div>
+          
+          {/* Mobile Card View */}
+          <div className="block md:hidden space-y-3 w-full">
+            {vendors.map((vendor) => (
+              <div key={vendor.id} className="border rounded-lg p-3 bg-gray-50">
+                <div className="mb-2">
+                  <p className="font-semibold text-gray-900">{vendor.name}</p>
+                  <p className="text-xs text-gray-600">{vendor.contact_person}</p>
+                </div>
+                <div className="space-y-1 text-xs mb-2">
+                  <div className="flex justify-between">
+                    <span className="text-gray-500">Email:</span>
+                    <span className="font-medium text-gray-900 truncate ml-2">{vendor.email}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-500">Phone:</span>
+                    <span className="font-medium text-gray-900">{vendor.phone}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-500">Contract:</span>
+                    <span className="font-medium text-gray-900">{vendor.contract_expiry}</span>
+                  </div>
+                  <div>
+                    <span className="text-gray-500">Services:</span>
+                    <p className="font-medium text-gray-900 mt-1">{vendor.services}</p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => openModal('vendor', vendor)}
+                  className="w-full mt-2 text-blue-600 hover:text-blue-900 text-sm font-medium py-1 border border-blue-200 rounded hover:bg-blue-50"
+                >
+                  ✏️ Edit
+                </button>
+              </div>
+            ))}
+          </div>
+          
+          {/* Desktop Table View */}
+          <div className="hidden md:block w-full overflow-x-auto">
+            <div className="inline-block min-w-full align-middle">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Company</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Contact Person</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Email</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Phone</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Contract Expiry</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Services</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {vendors.map((vendor) => (
+                    <tr key={vendor.id} className="hover:bg-gray-50">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{vendor.name}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{vendor.contact_person}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{vendor.email}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{vendor.phone}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{vendor.contract_expiry}</td>
+                      <td className="px-6 py-4 text-sm text-gray-900">{vendor.services}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                         <button
-                          onClick={() => openModal('firewall', firewall)}
+                          onClick={() => openModal('vendor', vendor)}
                           className="text-blue-600 hover:text-blue-900 mr-3"
                         >
                           ✏️ Edit
                         </button>
                       </td>
                     </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       )}
 
-      {/* Vendors Tab */}
-      {activeTab === 'vendors' && (
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-xl font-semibold text-gray-900">🏢 Vendor Management</h2>
-            <button
-              onClick={() => openModal('vendor')}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium"
-            >
-              ➕ Add Vendor
-            </button>
+          {/* Downtimes Tab - Mobile Responsive */}
+          {activeTab === 'downtimes' && (
+            <div className="bg-white rounded-lg shadow-md p-4 md:p-6 w-full max-w-full overflow-hidden">
+              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-4 md:mb-6">
+                <h2 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900">⏰ Downtime Records</h2>
+                <button
+                  onClick={() => openModal('downtime')}
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-xs md:text-sm font-medium w-full sm:w-auto whitespace-nowrap"
+                >
+                  ➕ Add Downtime
+                </button>
+              </div>
+          
+          {/* Mobile Card View */}
+          <div className="block md:hidden space-y-3 w-full">
+            {downtimes.map((downtime) => (
+              <div key={downtime.id} className="border rounded-lg p-3 bg-gray-50">
+                <div className="flex justify-between items-start mb-2">
+                  <div className="flex-1 min-w-0">
+                    <p className="font-semibold text-gray-900 truncate">{downtime.system}</p>
+                    <p className="text-xs text-gray-600">{downtime.duration}</p>
+                  </div>
+                  <span className={`px-2 py-1 rounded-full text-xs font-medium ml-2 ${getStatusColor(downtime.impact)}`}>
+                    {downtime.impact}
+                  </span>
+                </div>
+                <div className="space-y-1 text-xs mb-2">
+                  <div className="flex justify-between">
+                    <span className="text-gray-500">Start:</span>
+                    <span className="font-medium text-gray-900">{downtime.start_time}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-500">End:</span>
+                    <span className="font-medium text-gray-900">{downtime.end_time}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-500">Users:</span>
+                    <span className="font-medium text-gray-900">{downtime.affected_users}</span>
+                  </div>
+                  <div>
+                    <span className="text-gray-500">Reason:</span>
+                    <p className="font-medium text-gray-900 mt-1">{downtime.reason}</p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => openModal('downtime', downtime)}
+                  className="w-full mt-2 text-blue-600 hover:text-blue-900 text-sm font-medium py-1 border border-blue-200 rounded hover:bg-blue-50"
+                >
+                  ✏️ Edit
+                </button>
+              </div>
+            ))}
           </div>
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Company</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Contact Person</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Email</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Phone</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Contract Expiry</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Services</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {vendors.map((vendor) => (
-                  <tr key={vendor.id} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{vendor.name}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{vendor.contact_person}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{vendor.email}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{vendor.phone}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{vendor.contract_expiry}</td>
-                    <td className="px-6 py-4 text-sm text-gray-900">{vendor.services}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                      <button
-                        onClick={() => openModal('vendor', vendor)}
-                        className="text-blue-600 hover:text-blue-900 mr-3"
-                      >
-                        ✏️ Edit
-                      </button>
-                    </td>
+          
+          {/* Desktop Table View */}
+          <div className="hidden md:block w-full overflow-x-auto">
+            <div className="inline-block min-w-full align-middle">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">System</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Start Time</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">End Time</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Duration</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Reason</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Impact</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Affected Users</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {downtimes.map((downtime) => (
+                    <tr key={downtime.id} className="hover:bg-gray-50">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{downtime.system}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{downtime.start_time}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{downtime.end_time}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{downtime.duration}</td>
+                      <td className="px-6 py-4 text-sm text-gray-900">{downtime.reason}</td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(downtime.impact)}`}>
+                          {downtime.impact}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{downtime.affected_users}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <button
+                          onClick={() => openModal('downtime', downtime)}
+                          className="text-blue-600 hover:text-blue-900 mr-3"
+                        >
+                          ✏️ Edit
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       )}
 
-      {/* Downtimes Tab */}
-      {activeTab === 'downtimes' && (
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-xl font-semibold text-gray-900">⏰ Downtime Records</h2>
-            <button
-              onClick={() => openModal('downtime')}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium"
-            >
-              ➕ Add Downtime Record
-            </button>
+          {/* Servers Tab - Mobile Responsive */}
+          {activeTab === 'servers' && (
+            <div className="bg-white rounded-lg shadow-md p-4 md:p-6 w-full max-w-full overflow-hidden">
+              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-4 md:mb-6">
+                <h2 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900">🖥️ Server Management</h2>
+                <button
+                  onClick={() => openModal('server')}
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-xs md:text-sm font-medium w-full sm:w-auto whitespace-nowrap"
+                >
+                  ➕ Add Server
+                </button>
+              </div>
+          
+          {/* Mobile Card View */}
+          <div className="block md:hidden space-y-3 w-full">
+            {servers.map((server) => (
+              <div key={server.id} className="border rounded-lg p-3 bg-gray-50">
+                <div className="flex justify-between items-start mb-2">
+                  <div className="flex-1 min-w-0">
+                    <p className="font-semibold text-gray-900 truncate">{server.name}</p>
+                    <p className="text-xs text-gray-600 truncate">{server.os}</p>
+                  </div>
+                  <span className={`px-2 py-1 rounded-full text-xs font-medium ml-2 ${getStatusColor(server.status)}`}>
+                    {server.status}
+                  </span>
+                </div>
+                <div className="grid grid-cols-2 gap-2 text-xs mb-2">
+                  <div>
+                    <span className="text-gray-500">IP:</span>
+                    <p className="font-medium text-gray-900">{server.ip}</p>
+                  </div>
+                  <div>
+                    <span className="text-gray-500">RAM:</span>
+                    <p className="font-medium text-gray-900">{server.ram}</p>
+                  </div>
+                  <div>
+                    <span className="text-gray-500">Storage:</span>
+                    <p className="font-medium text-gray-900">{server.storage}</p>
+                  </div>
+                  <div>
+                    <span className="text-gray-500">Uptime:</span>
+                    <p className="font-medium text-gray-900">{server.uptime}</p>
+                  </div>
+                </div>
+                <div className="text-xs mb-2">
+                  <span className="text-gray-500">CPU:</span>
+                  <p className="font-medium text-gray-900 truncate">{server.cpu}</p>
+                </div>
+                <button
+                  onClick={() => openModal('server', server)}
+                  className="w-full mt-2 text-blue-600 hover:text-blue-900 text-sm font-medium py-1 border border-blue-200 rounded hover:bg-blue-50"
+                >
+                  ✏️ Edit
+                </button>
+              </div>
+            ))}
           </div>
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">System</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Start Time</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">End Time</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Duration</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Reason</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Impact</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Affected Users</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {downtimes.map((downtime) => (
-                  <tr key={downtime.id} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{downtime.system}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{downtime.start_time}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{downtime.end_time}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{downtime.duration}</td>
-                    <td className="px-6 py-4 text-sm text-gray-900">{downtime.reason}</td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(downtime.impact)}`}>
-                        {downtime.impact}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{downtime.affected_users}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                      <button
-                        onClick={() => openModal('downtime', downtime)}
-                        className="text-blue-600 hover:text-blue-900 mr-3"
-                      >
-                        ✏️ Edit
-                      </button>
-                    </td>
+          
+          {/* Desktop Table View */}
+          <div className="hidden md:block w-full overflow-x-auto">
+            <div className="inline-block min-w-full align-middle">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">IP Address</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">OS</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">CPU</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">RAM</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Storage</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Uptime</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {servers.map((server) => (
+                    <tr key={server.id} className="hover:bg-gray-50">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{server.name}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{server.ip}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{server.os}</td>
+                      <td className="px-6 py-4 text-sm text-gray-900">{server.cpu}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{server.ram}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{server.storage}</td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(server.status)}`}>
+                          {server.status}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{server.uptime}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <button
+                          onClick={() => openModal('server', server)}
+                          className="text-blue-600 hover:text-blue-900 mr-3"
+                        >
+                          ✏️ Edit
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       )}
 
-      {/* Servers Tab */}
-      {activeTab === 'servers' && (
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-xl font-semibold text-gray-900">🖥️ Server Management</h2>
-            <button
-              onClick={() => openModal('server')}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium"
-            >
-              ➕ Add Server
-            </button>
+          {/* Procurement Tab - Mobile Responsive */}
+          {activeTab === 'procurement' && (
+            <div className="bg-white rounded-lg shadow-md p-4 md:p-6 w-full max-w-full overflow-hidden">
+              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-4 md:mb-6">
+                <h2 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900">📦 Procurement</h2>
+                <button
+                  onClick={() => openModal('procurement')}
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-xs md:text-sm font-medium w-full sm:w-auto whitespace-nowrap"
+                >
+                  ➕ Add Request
+                </button>
+              </div>
+          
+          {/* Mobile Card View */}
+          <div className="block md:hidden space-y-3 w-full">
+            {procurements.map((procurement) => (
+              <div key={procurement.id} className="border rounded-lg p-3 bg-gray-50">
+                <div className="flex justify-between items-start mb-2">
+                  <div className="flex-1 min-w-0">
+                    <p className="font-semibold text-gray-900">{procurement.item}</p>
+                    <p className="text-xs text-gray-600">{procurement.category}</p>
+                  </div>
+                  <span className={`px-2 py-1 rounded-full text-xs font-medium ml-2 ${getStatusColor(procurement.status)}`}>
+                    {procurement.status}
+                  </span>
+                </div>
+                <div className="grid grid-cols-2 gap-2 text-xs mb-2">
+                  <div>
+                    <span className="text-gray-500">Vendor:</span>
+                    <p className="font-medium text-gray-900 truncate">{procurement.vendor}</p>
+                  </div>
+                  <div>
+                    <span className="text-gray-500">Quantity:</span>
+                    <p className="font-medium text-gray-900">{procurement.quantity}</p>
+                  </div>
+                  <div>
+                    <span className="text-gray-500">Unit Price:</span>
+                    <p className="font-medium text-gray-900">${procurement.unit_price.toLocaleString()}</p>
+                  </div>
+                  <div>
+                    <span className="text-gray-500">Total:</span>
+                    <p className="font-medium text-green-600">${procurement.total_price.toLocaleString()}</p>
+                  </div>
+                </div>
+                <div className="text-xs mb-2">
+                  <span className="text-gray-500">Requested by:</span>
+                  <p className="font-medium text-gray-900">{procurement.requested_by}</p>
+                </div>
+                <button
+                  onClick={() => openModal('procurement', procurement)}
+                  className="w-full mt-2 text-blue-600 hover:text-blue-900 text-sm font-medium py-1 border border-blue-200 rounded hover:bg-blue-50"
+                >
+                  ✏️ Edit
+                </button>
+              </div>
+            ))}
           </div>
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">IP Address</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">OS</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">CPU</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">RAM</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Storage</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Uptime</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {servers.map((server) => (
-                  <tr key={server.id} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{server.name}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{server.ip}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{server.os}</td>
-                    <td className="px-6 py-4 text-sm text-gray-900">{server.cpu}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{server.ram}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{server.storage}</td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(server.status)}`}>
-                        {server.status}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{server.uptime}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                      <button
-                        onClick={() => openModal('server', server)}
-                        className="text-blue-600 hover:text-blue-900 mr-3"
-                      >
-                        ✏️ Edit
-                      </button>
-                    </td>
+          
+          {/* Desktop Table View */}
+          <div className="hidden md:block w-full overflow-x-auto">
+            <div className="inline-block min-w-full align-middle">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Item</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Category</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Vendor</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Quantity</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Unit Price</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Total Price</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Requested By</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {procurements.map((procurement) => (
+                    <tr key={procurement.id} className="hover:bg-gray-50">
+                      <td className="px-6 py-4 text-sm font-medium text-gray-900">{procurement.item}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{procurement.category}</td>
+                      <td className="px-6 py-4 text-sm text-gray-900">{procurement.vendor}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{procurement.quantity}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${procurement.unit_price.toLocaleString()}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${procurement.total_price.toLocaleString()}</td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(procurement.status)}`}>
+                          {procurement.status}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{procurement.requested_by}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <button
+                          onClick={() => openModal('procurement', procurement)}
+                          className="text-blue-600 hover:text-blue-900 mr-3"
+                        >
+                          ✏️ Edit
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       )}
 
-      {/* Procurement Tab */}
-      {activeTab === 'procurement' && (
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-xl font-semibold text-gray-900">📦 Procurement Management</h2>
-            <button
-              onClick={() => openModal('procurement')}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium"
-            >
-              ➕ Add Procurement Request
-            </button>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Item</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Category</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Vendor</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Quantity</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Unit Price</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Total Price</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Requested By</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {procurements.map((procurement) => (
-                  <tr key={procurement.id} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 text-sm font-medium text-gray-900">{procurement.item}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{procurement.category}</td>
-                    <td className="px-6 py-4 text-sm text-gray-900">{procurement.vendor}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{procurement.quantity}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${procurement.unit_price.toLocaleString()}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${procurement.total_price.toLocaleString()}</td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(procurement.status)}`}>
-                        {procurement.status}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{procurement.requested_by}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                      <button
-                        onClick={() => openModal('procurement', procurement)}
-                        className="text-blue-600 hover:text-blue-900 mr-3"
-                      >
-                        ✏️ Edit
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      )}
-
-      {/* Modal */}
+      {/* Modal - Mobile Responsive */}
       {showModal && (
-        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
-          <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50 flex items-center justify-center p-4">
+          <div className="relative mx-auto p-4 md:p-5 border w-full max-w-md shadow-lg rounded-md bg-white">
             <div className="mt-3">
               <h3 className="text-lg font-medium text-gray-900 mb-4">
                 {modalType === 'firewall' && '🔥 Firewall Details'}
@@ -1053,6 +1280,8 @@ const ITInfrastructureHealthAdvanced = ({ token, user }) => {
           </div>
         </div>
       )}
+        </div>
+      </div>
     </div>
   );
 };
