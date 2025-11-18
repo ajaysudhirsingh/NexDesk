@@ -148,7 +148,7 @@ const ITInfrastructureHealth = ({ token, user }) => {
     return (
       <div className="flex items-center justify-center h-64">
         <div className="text-center">
-          <div className="text-gray-500 mb-2">⚠️ No infrastructure data available</div>
+          <div className="text-gray-500 mb-2">No infrastructure data available</div>
           <button 
             onClick={fetchHealthData}
             className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm"
@@ -180,21 +180,24 @@ const ITInfrastructureHealth = ({ token, user }) => {
           <div className="mt-4 md:mt-0 flex flex-wrap gap-2">
             <button
               onClick={() => exportData('csv')}
-              className="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+              className="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2"
             >
-              📊 Export CSV
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z"/></svg>
+              Export CSV
             </button>
             <button
               onClick={() => exportData('pdf')}
-              className="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+              className="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2"
             >
-              📄 Export PDF
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-8-6z"/></svg>
+              Export PDF
             </button>
             <button
               onClick={fetchHealthData}
-              className="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+              className="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2"
             >
-              🔄 Refresh
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M1 4v6h6M23 20v-6h-6M20.3 5.7A9 9 0 0 0 5.1 19.3M3.7 18.3A9 9 0 0 1 18.9 4.7"/></svg>
+              Refresh
             </button>
           </div>
         </div>
@@ -244,7 +247,7 @@ const ITInfrastructureHealth = ({ token, user }) => {
               </p>
             </div>
             <div className="p-3 bg-red-100 rounded-full">
-              <span className="text-2xl">⚠️</span>
+              <svg className="w-6 h-6 text-red-600" fill="currentColor" viewBox="0 0 24 24"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
             </div>
           </div>
         </div>
@@ -259,7 +262,7 @@ const ITInfrastructureHealth = ({ token, user }) => {
               </p>
             </div>
             <div className="p-3 bg-blue-100 rounded-full">
-              <span className="text-2xl">🔧</span>
+              <svg className="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 24 24"><path d="M22.7 19l-9.1-9.1c.9-1.3 1.4-2.9 1.4-4.6 0-4.4-3.6-8-8-8S1 .9 1 5.3s3.6 8 8 8c1.7 0 3.2-.5 4.6-1.4l9.1 9.1c.4.4 1 .4 1.4 0l2.6-2.6c.4-.4.4-1 0-1.4zM5 8.5c-1.9 0-3.5-1.6-3.5-3.5S3.1 1.5 5 1.5 8.5 3.1 8.5 5 6.9 8.5 5 8.5z"/></svg>
             </div>
           </div>
         </div>
@@ -274,7 +277,7 @@ const ITInfrastructureHealth = ({ token, user }) => {
               </p>
             </div>
             <div className="p-3 bg-purple-100 rounded-full">
-              <span className="text-2xl">🔄</span>
+              <svg className="w-6 h-6 text-purple-600" fill="currentColor" viewBox="0 0 24 24"><path d="M7 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-5C5.9 5 5 5.9 5 7s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 12c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6-7c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0-5c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 12c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
             </div>
           </div>
         </div>
@@ -289,7 +292,7 @@ const ITInfrastructureHealth = ({ token, user }) => {
               </p>
             </div>
             <div className="p-3 bg-cyan-100 rounded-full">
-              <span className="text-2xl">🏢</span>
+              <svg className="w-6 h-6 text-cyan-600" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"/></svg>
             </div>
           </div>
         </div>
@@ -299,10 +302,10 @@ const ITInfrastructureHealth = ({ token, user }) => {
       <div className="bg-white rounded-lg shadow-md p-4">
         <div className="flex flex-wrap gap-2">
           {[
-            { key: 'outage', label: '⚠️ System Outage Impact', color: 'red' },
-            { key: 'preventive', label: '🔧 Preventive vs Reactive', color: 'blue' },
-            { key: 'change', label: '🔄 Change Management', color: 'purple' },
-            { key: 'vendor', label: '🏢 Vendor Performance', color: 'cyan' }
+            { key: 'outage', label: 'System Outage Impact', color: 'red', icon: 'warning' },
+            { key: 'preventive', label: 'Preventive vs Reactive', color: 'blue', icon: 'wrench' },
+            { key: 'change', label: 'Change Management', color: 'purple', icon: 'refresh' },
+            { key: 'vendor', label: 'Vendor Performance', color: 'cyan', icon: 'building' }
           ].map(metric => (
             <button
               key={metric.key}
@@ -324,10 +327,10 @@ const ITInfrastructureHealth = ({ token, user }) => {
         {/* Main Chart */}
         <div className="bg-white rounded-lg shadow-md p-6">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">
-            {selectedMetric === 'outage' && '⚠️ System Outage Impact Analysis'}
-            {selectedMetric === 'preventive' && '🔧 Preventive vs Reactive Tickets'}
-            {selectedMetric === 'change' && '🔄 Change Management Impact'}
-            {selectedMetric === 'vendor' && '🏢 Vendor Performance Metrics'}
+            {selectedMetric === 'outage' && 'System Outage Impact Analysis'}
+            {selectedMetric === 'preventive' && 'Preventive vs Reactive Tickets'}
+            {selectedMetric === 'change' && 'Change Management Impact'}
+            {selectedMetric === 'vendor' && 'Vendor Performance Metrics'}
           </h3>
           
           <ResponsiveContainer width="100%" height={300}>
@@ -380,7 +383,7 @@ const ITInfrastructureHealth = ({ token, user }) => {
 
         {/* Summary Pie Chart */}
         <div className="bg-white rounded-lg shadow-md p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">📊 Infrastructure Health Overview</h3>
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">Infrastructure Health Overview</h3>
           
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>
@@ -426,7 +429,7 @@ const ITInfrastructureHealth = ({ token, user }) => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Recent Outages */}
         <div className="bg-white rounded-lg shadow-md p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">⚠️ Recent System Outages</h3>
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">Recent System Outages</h3>
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
@@ -464,7 +467,7 @@ const ITInfrastructureHealth = ({ token, user }) => {
 
         {/* Top Vendors by Issues */}
         <div className="bg-white rounded-lg shadow-md p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">🏢 Vendor Performance Summary</h3>
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">Vendor Performance Summary</h3>
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">

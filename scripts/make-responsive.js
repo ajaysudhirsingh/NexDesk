@@ -51,9 +51,9 @@ function makeResponsive(filePath) {
   
   if (changes > 0) {
     fs.writeFileSync(filePath, content, 'utf8');
-    console.log(`✅ Made ${changes} responsive updates to ${filePath}`);
+    console.log(`[✓] Made ${changes} responsive updates to ${filePath}`);
   } else {
-    console.log(`ℹ️  No changes needed for ${filePath}`);
+    console.log(`[i] No changes needed for ${filePath}`);
   }
   
   return changes;
@@ -80,14 +80,14 @@ function processDirectory(dir) {
 // Main execution
 const frontendSrc = path.join(__dirname, '../frontend/src');
 
-console.log('🚀 Starting Mobile Responsive Conversion...\n');
+console.log('[→] Starting Mobile Responsive Conversion...\n');
 console.log(`Processing directory: ${frontendSrc}\n`);
 
 const totalChanges = processDirectory(frontendSrc);
 
-console.log(`\n✨ Complete! Made ${totalChanges} total responsive updates.`);
-console.log('\n📝 Next steps:');
+console.log(`\n[✓] Complete! Made ${totalChanges} total responsive updates.`);
+console.log('\n[*] Next steps:');
 console.log('1. Review the changes');
 console.log('2. Test on mobile devices');
 console.log('3. Commit the changes');
-console.log('\n💡 Tip: Use Chrome DevTools mobile emulation for testing');
+console.log('\n[i] Tip: Use Chrome DevTools mobile emulation for testing');

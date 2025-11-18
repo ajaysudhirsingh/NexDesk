@@ -4,6 +4,23 @@ import './App.css';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
 
+// Icon component helper
+const IconComponent = ({ icon, className = 'w-5 h-5' }) => {
+  const iconMap = {
+    chart: <svg className={className} fill="currentColor" viewBox="0 0 24 24"><path d="M5 9.2h3V19H5zM10.6 5h2.8v14h-2.8zm5.6 8H19v6h-2.8z"/></svg>,
+    calendar: <svg className={className} fill="currentColor" viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z"/></svg>,
+    laptop: <svg className={className} fill="currentColor" viewBox="0 0 24 24"><path d="M20 3H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4V5c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2z"/></svg>,
+    users: <svg className={className} fill="currentColor" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm8 0c1.66 0 2.99-1.34 2.99-3S25.66 5 24 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.89 1.97 1.74 1.97 2.95V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>,
+    desktop: <svg className={className} fill="currentColor" viewBox="0 0 24 24"><path d="M20 3H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4V5c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2z"/></svg>,
+    mobile: <svg className={className} fill="currentColor" viewBox="0 0 24 24"><path d="M17 2H7c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-5 18c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm5-3H7V4h10v13z"/></svg>,
+    monitor: <svg className={className} fill="currentColor" viewBox="0 0 24 24"><path d="M20 3H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4V5c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2z"/></svg>,
+    printer: <svg className={className} fill="currentColor" viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg>,
+    package: <svg className={className} fill="currentColor" viewBox="0 0 24 24"><path d="M18 6.5L12 3.82 6 6.5v11L12 20.18l6-3.68v-11zM12 5.18L16.82 7.5 12 9.82 7.18 7.5 12 5.18zM17 15.5l-5 3.07-5-3.07v-2.64L7 10.5v5l5 3.07 5-3.07v-5l-1 2.36v2.64z"/></svg>,
+  };
+  return iconMap[icon] || null;
+};
+
+
 import {
   PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip, Legend, LineChart, Line, ResponsiveContainer
 } from 'recharts';
@@ -2072,8 +2089,8 @@ const App = () => {
         // Show detailed success message with admin credentials
         const adminCreds = data.admin_credentials;
         showMessage(
-          `✅ Client "${data.client.name}" created successfully!\n` +
-          `🔑 Default Admin Login:\n` +
+          `[✓] Client "${data.client.name}" created successfully!\n` +
+          `[*] Default Admin Login:\n` +
           `• Username: ${adminCreds.username}\n` +
           `• Password: ${adminCreds.password}\n` +
           `• Client Code: ${data.client.code}\n` +
@@ -2608,7 +2625,7 @@ const App = () => {
             {requiresTOTPSetup && (
               <div className="mt-4 p-2 bg-yellow-100 border border-yellow-400 rounded text-center">
                 <p className="text-sm text-yellow-800">
-                  🔧 DEBUG: TOTP Setup Required (State: {requiresTOTPSetup.toString()})
+                  [*] DEBUG: TOTP Setup Required (State: {requiresTOTPSetup.toString()})
                 </p>
               </div>
             )}
@@ -3960,9 +3977,9 @@ const App = () => {
                               value={ticketForm.assigned_to}
                               onChange={(e) => setTicketForm({ ...ticketForm, assigned_to: e.target.value })}
                             >
-                              <option value="">🎯 Auto-assign to best available agent</option>
+                              <option value="">Auto-assign to best available agent</option>
                               {assignableUsers.map(user => (
-                                <option key={user.id} value={user.id}>👤 {user.username}</option>
+                                <option key={user.id} value={user.id}>{user.username}</option>
                               ))}
                             </select>
                           </div>
@@ -4485,12 +4502,12 @@ const App = () => {
                             </label>
                             <div className="space-y-2">
                               {[
-                                { value: 'laptop', label: 'Laptop', icon: '💻' },
-                                { value: 'desktop', label: 'Desktop', icon: '🖥️' },
-                                { value: 'mobile', label: 'Mobile', icon: '📱' },
-                                { value: 'monitor', label: 'Monitor', icon: '🖨️' },
-                                { value: 'printer', label: 'Printer', icon: '🖨️' },
-                                { value: 'other', label: 'Other', icon: '📦' }
+                                { value: 'laptop', label: 'Laptop', icon: 'laptop' },
+                                { value: 'desktop', label: 'Desktop', icon: 'desktop' },
+                                { value: 'mobile', label: 'Mobile', icon: 'mobile' },
+                                { value: 'monitor', label: 'Monitor', icon: 'monitor' },
+                                { value: 'printer', label: 'Printer', icon: 'printer' },
+                                { value: 'other', label: 'Other', icon: 'package' }
                               ].map((type) => (
                                 <label key={type.value} className={`flex items-center p-2.5 border-2 rounded-lg cursor-pointer transition-all duration-200 hover:shadow-sm ${
                                   assetForm.asset_type === type.value 
@@ -4652,7 +4669,7 @@ const App = () => {
             {currentView === 'superadmin' && user.role === 'superadmin' && (
               <div className="space-y-6">
                 <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-                  <h3 className="text-lg font-semibold text-red-800 mb-2">⚠️ SuperAdmin Panel</h3>
+                  <h3 className="text-lg font-semibold text-red-800 mb-2">SuperAdmin Panel</h3>
                   <p className="text-red-700 text-sm">
                     This panel allows you to bulk delete system data for testing purposes. All actions are irreversible.
                   </p>
@@ -4705,7 +4722,7 @@ const App = () => {
                       }}
                       className="w-full bg-red-800 text-white px-4 py-3 rounded-md hover:bg-red-900 transition-colors font-semibold"
                     >
-                      🔥 RESET CLIENT SYSTEM
+                      RESET CLIENT SYSTEM
                     </button>
                   </div>
                 </div>
@@ -4739,7 +4756,7 @@ const App = () => {
             {currentView === 'clients' && user.role === 'superadmin' && (
               <div className="space-y-6">
                 <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
-                  <h3 className="text-lg font-semibold text-purple-800 mb-2">🏢 Client Management</h3>
+                  <h3 className="text-lg font-semibold text-purple-800 mb-2">Client Management</h3>
                   <p className="text-purple-700 text-sm">
                     Manage client organizations and their access codes. Each client has isolated data.
                   </p>
@@ -4750,10 +4767,10 @@ const App = () => {
                   <h3 className="text-lg font-semibold text-gray-900 mb-4">Create New Client</h3>
                   <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-4">
                     <p className="text-blue-800 text-sm">
-                      💡 Each client gets a unique code (e.g., 0012, 0013, 0014). Users will need this code to log in.
+                      Each client gets a unique code (e.g., 0012, 0013, 0014). Users will need this code to log in.
                     </p>
                     <p className="text-blue-800 text-sm mt-2">
-                      🔑 A default admin user will be automatically created with credentials: <strong>admin / admin123</strong>
+                      A default admin user will be automatically created with credentials: <strong>admin / admin123</strong>
                     </p>
                   </div>
                   <form onSubmit={handleCreateClient} className="space-y-4">
@@ -5111,7 +5128,7 @@ const App = () => {
                       {editingClient.code === '031210' && (
                         <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mb-4">
                           <p className="text-yellow-800 text-sm">
-                            ⚠️ This is the default client. Changes will affect all existing users using this client code.
+                            This is the default client. Changes will affect all existing users using this client code.
                           </p>
                         </div>
                       )}
@@ -6334,7 +6351,7 @@ const App = () => {
                                   }}
                                   className="text-purple-600 hover:text-purple-900 text-xs md:text-sm font-medium px-3 py-1.5 border border-purple-200 rounded hover:bg-purple-50 whitespace-nowrap"
                                 >
-                                  ✏️ Edit Username
+                                  Edit Username
                                 </button>
                               )}
                               {!(userData.role === 'superadmin' && user.role !== 'superadmin') && (
@@ -6345,7 +6362,7 @@ const App = () => {
                                   }}
                                   className="text-blue-600 hover:text-blue-900 text-xs md:text-sm font-medium px-3 py-1.5 border border-blue-200 rounded hover:bg-blue-50 whitespace-nowrap"
                                 >
-                                  🔑 Reset Password
+                                  Reset Password
                                 </button>
                               )}
                               {userData.role !== 'admin' && userData.role !== 'superadmin' && (
@@ -6702,7 +6719,7 @@ const App = () => {
                       )}
                       className="px-3 md:px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-xs md:text-sm font-medium"
                     >
-                      🔄 Refresh
+                      Refresh
                     </button>
                     <label className="flex items-center gap-2 text-xs md:text-sm">
                       <input
@@ -6720,14 +6737,14 @@ const App = () => {
                 <div className="flex flex-wrap gap-2">
                   {(() => {
                     const adminReports = [
-                      { id: 'overview', name: 'Overview', icon: '📊' },
-                      { id: 'daily', name: 'Daily Reports', icon: '📅' },
-                      { id: 'assets', name: 'Asset Reports', icon: '💻' },
-                      { id: 'performance', name: 'Agent Performance', icon: '👥' }
+                      { id: 'overview', name: 'Overview', icon: 'chart' },
+                      { id: 'daily', name: 'Daily Reports', icon: 'calendar' },
+                      { id: 'assets', name: 'Asset Reports', icon: 'laptop' },
+                      { id: 'performance', name: 'Agent Performance', icon: 'users' }
                     ];
                     
                     const userReports = [
-                      { id: 'daily', name: 'Daily Reports', icon: '📅' }
+                      { id: 'daily', name: 'Daily Reports', icon: 'calendar' }
                     ];
                     
                     const reports = user.role === 'admin' || user.role === 'superadmin' ? adminReports : userReports;
@@ -6742,7 +6759,7 @@ const App = () => {
                             : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                         }`}
                       >
-                        <span>{report.icon}</span>
+                        <IconComponent icon={report.icon} className="w-4 h-4 md:w-5 md:h-5" />
                         <span className="whitespace-nowrap">{report.name}</span>
                       </button>
                     ));
@@ -6758,7 +6775,7 @@ const App = () => {
                   <div>
                     {/* Summary Section */}
                     <div className="bg-gradient-to-r from-blue-50 to-gray-50 rounded-xl p-6 mb-8">
-                      <h3 className="text-lg font-semibold text-gray-800 mb-4">📊 Reports Summary</h3>
+                      <h3 className="text-lg font-semibold text-gray-800 mb-4">Reports Summary</h3>
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
                         <div className="bg-white rounded-lg p-3 shadow-sm">
                           <div className="font-medium text-gray-700">Date Range</div>
@@ -6813,7 +6830,7 @@ const App = () => {
                                 {reportsData.agentPerformance?.labels?.length || 0}
                               </p>
                             </div>
-                            <div className="text-4xl">👨‍💼</div>
+                            <div className="text-4xl">👤</div>
                           </div>
                         </div>
 
@@ -6825,7 +6842,7 @@ const App = () => {
                                 {reportsData.ticketStatus?.values?.[reportsData.ticketStatus?.labels?.indexOf('high')] || 0}
                               </p>
                             </div>
-                            <div className="text-4xl">🚨</div>
+                            <div className="text-4xl">⚠</div>
                           </div>
                         </div>
 
@@ -6857,8 +6874,8 @@ const App = () => {
                             <div>
                               <h2 className="text-lg md:text-2xl font-bold text-gray-800">
                                 {user.role === 'admin' || user.role === 'superadmin' 
-                                  ? '📊 Organization Daily Reports' 
-                                  : '📅 My Daily Reports'}
+                                  ? 'Organization Daily Reports' 
+                                  : 'My Daily Reports'}
                               </h2>
                               <p className="text-xs md:text-sm text-gray-600 mt-1">
                                 {user.role === 'admin' || user.role === 'superadmin'
@@ -6892,7 +6909,7 @@ const App = () => {
                                 <p className="text-xs text-gray-500 mt-1">Tickets created</p>
                               </div>
                               <div className="w-10 h-10 md:w-12 md:h-12 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
-                                <span className="text-xl md:text-2xl">📝</span>
+                                <svg className="w-6 h-6 md:w-8 md:h-8 text-blue-600" fill="currentColor" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z"/></svg>
                               </div>
                             </div>
                           </div>
@@ -6911,7 +6928,7 @@ const App = () => {
                                 <p className="text-xs text-gray-500 mt-1">Tickets resolved</p>
                               </div>
                               <div className="w-10 h-10 md:w-12 md:h-12 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-                                <span className="text-xl md:text-2xl">✅</span>
+                                <svg className="w-6 h-6 md:w-8 md:h-8 text-green-600" fill="currentColor" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
                               </div>
                             </div>
                           </div>
@@ -6953,7 +6970,7 @@ const App = () => {
                                 <p className="text-xs text-gray-500 mt-1">Success rate</p>
                               </div>
                               <div className="w-10 h-10 md:w-12 md:h-12 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
-                                <span className="text-xl md:text-2xl">📈</span>
+                                <svg className="w-6 h-6 md:w-8 md:h-8 text-purple-600" fill="currentColor" viewBox="0 0 24 24"><path d="M5 9.2h3V19H5zM10.6 5h2.8v14h-2.8zm5.6 8H19v6h-2.8z"/></svg>
                               </div>
                             </div>
                           </div>
@@ -7149,7 +7166,7 @@ const App = () => {
                                   className="flex items-center justify-center px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
                                 >
                                   <span className="mr-2">
-                                    {format === 'csv' ? '📊' : format === 'excel' ? '📈' : format === 'pdf' ? '📄' : '💾'}
+                                    {format === 'csv' ? '[CSV]' : format === 'excel' ? '[XLS]' : format === 'pdf' ? '[PDF]' : '[*]'}
                                   </span>
                                   {format.toUpperCase()}
                                 </button>
@@ -7168,7 +7185,7 @@ const App = () => {
                                 )}
                                 className="w-full flex items-center justify-center px-4 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm font-medium"
                               >
-                                <span className="mr-2">🔄</span>
+                                <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M1 4v6h6M23 20v-6h-6M20.3 5.7A9 9 0 0 0 5.1 19.3M3.7 18.3A9 9 0 0 1 18.9 4.7"/></svg>
                                 Refresh Data
                               </button>
                               
@@ -7177,7 +7194,7 @@ const App = () => {
                                   onClick={() => setSelectedReport('performance')}
                                   className="w-full flex items-center justify-center px-4 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors text-sm font-medium"
                                 >
-                                  <span className="mr-2">👥</span>
+                                  <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm8 0c1.66 0 2.99-1.34 2.99-3S25.66 5 24 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.89 1.97 1.74 1.97 2.95V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
                                   View Agent Performance
                                 </button>
                               ) : (
@@ -7185,7 +7202,7 @@ const App = () => {
                                   onClick={() => setCurrentView('tickets')}
                                   className="w-full flex items-center justify-center px-4 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors text-sm font-medium"
                                 >
-                                  <span className="mr-2">🎫</span>
+                                  <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-5.04-6.71l-2.75 3.54-2.16-2.66c-.44-.53-1.25-.58-1.78-.15-.53.44-.58 1.25-.15 1.78l3 3.67c.25.31.61.5 1.02.5.4 0 .77-.19 1.02-.5l4-5.15c.44-.53.39-1.34-.15-1.78-.53-.44-1.34-.39-1.78.15z"/></svg>
                                   View My Tickets
                                 </button>
                               )}
@@ -7383,7 +7400,7 @@ const App = () => {
                                   }); 
                                 }}
                               >
-                                ✏️ Edit
+                                Edit
                               </button>
                               <button 
                                 className="text-red-600 hover:underline text-xs" 
@@ -7395,7 +7412,7 @@ const App = () => {
                                 className="text-green-600 hover:underline text-xs" 
                                 onClick={() => { setTeamToAddMember(team); setShowAddMemberModal(true); }}
                               >
-                                ➕ Add Member
+                                Add Member
                               </button>
                               {team.members && team.members.length > 0 && (
                                 <button 

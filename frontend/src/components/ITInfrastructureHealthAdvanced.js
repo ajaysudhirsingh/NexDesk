@@ -331,12 +331,12 @@ const ITInfrastructureHealthAdvanced = ({ token, user }) => {
             <div className="p-2 md:p-0">
               <div className="grid grid-cols-2 sm:grid-cols-3 md:flex md:border-b md:border-gray-200 gap-2 md:gap-0">
                 {[
-                  { id: 'dashboard', name: '📊 Dashboard', icon: '📊' },
-                  { id: 'firewalls', name: '🔥 Firewalls', icon: '🔥' },
-                  { id: 'vendors', name: '🏢 Vendors', icon: '🏢' },
-                  { id: 'downtimes', name: '⏰ Downtimes', icon: '⏰' },
-                  { id: 'servers', name: '🖥️ Servers', icon: '🖥️' },
-                  { id: 'procurement', name: '📦 Procurement', icon: '📦' }
+                  { id: 'dashboard', name: 'Dashboard', icon: 'dashboard' },
+                  { id: 'firewalls', name: 'Firewalls', icon: 'firewall' },
+                  { id: 'vendors', name: 'Vendors', icon: 'building' },
+                  { id: 'downtimes', name: 'Downtimes', icon: 'clock' },
+                  { id: 'servers', name: 'Servers', icon: 'server' },
+                  { id: 'procurement', name: 'Procurement', icon: 'package' }
                 ].map((tab) => (
                   <button
                     key={tab.id}
@@ -367,7 +367,7 @@ const ITInfrastructureHealthAdvanced = ({ token, user }) => {
                   <p className="text-xs text-red-600 mt-1">{(healthData && healthData.summary) ? healthData.summary.outageHours : 0} hours downtime</p>
                 </div>
                 <div className="p-2 md:p-3 bg-red-100 rounded-full flex-shrink-0">
-                  <span className="text-xl md:text-2xl">⚠️</span>
+                  <svg className="w-6 h-6 text-red-600" fill="currentColor" viewBox="0 0 24 24"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
                 </div>
               </div>
             </div>
@@ -380,7 +380,7 @@ const ITInfrastructureHealthAdvanced = ({ token, user }) => {
                   <p className="text-xs text-blue-600 mt-1">{servers.length} total servers</p>
                 </div>
                 <div className="p-2 md:p-3 bg-blue-100 rounded-full flex-shrink-0">
-                  <span className="text-xl md:text-2xl">🖥️</span>
+                  <svg className="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 24 24"><path d="M20 3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14l4 4V5c0-1.1-.9-2-2-2zm-2 12h-8v-2h8v2zm0-4h-8V9h8v2z"/></svg>
                 </div>
               </div>
             </div>
@@ -393,7 +393,7 @@ const ITInfrastructureHealthAdvanced = ({ token, user }) => {
                   <p className="text-xs text-yellow-600 mt-1">Within 30 days</p>
                 </div>
                 <div className="p-2 md:p-3 bg-yellow-100 rounded-full flex-shrink-0">
-                  <span className="text-xl md:text-2xl">⏰</span>
+                  <svg className="w-6 h-6 text-yellow-600" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.2 3.2.8-1.3-5-3V7z"/></svg>
                 </div>
               </div>
             </div>
@@ -406,7 +406,7 @@ const ITInfrastructureHealthAdvanced = ({ token, user }) => {
                   <p className="text-xs text-green-600 mt-1">${procurements.filter(p => p.status === 'Pending').reduce((sum, p) => sum + p.total_price, 0).toLocaleString()}</p>
                 </div>
                 <div className="p-2 md:p-3 bg-green-100 rounded-full flex-shrink-0">
-                  <span className="text-xl md:text-2xl">📦</span>
+                  <svg className="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 24 24"><path d="M18 6.5L12 3.82 6 6.5v11L12 20.18l6-3.68v-11zM12 5.18L16.82 7.5 12 9.82 7.18 7.5 12 5.18zM17 15.5l-5 3.07-5-3.07v-2.64L7 10.5v5l5 3.07 5-3.07v-5l-1 2.36v2.64z"/></svg>
                 </div>
               </div>
             </div>
@@ -415,7 +415,7 @@ const ITInfrastructureHealthAdvanced = ({ token, user }) => {
           {/* Recent Activity - Mobile Responsive */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
             <div className="bg-white rounded-lg shadow-md p-4 md:p-6">
-              <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-3 md:mb-4">🚨 Recent Downtimes</h3>
+              <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-3 md:mb-4">Recent Downtimes</h3>
               <div className="space-y-2 md:space-y-3">
                 {downtimes.slice(0, 3).map((downtime) => (
                   <div key={downtime.id} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 p-3 bg-gray-50 rounded-lg">
@@ -434,7 +434,7 @@ const ITInfrastructureHealthAdvanced = ({ token, user }) => {
             </div>
 
             <div className="bg-white rounded-lg shadow-md p-4 md:p-6">
-              <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-3 md:mb-4">🔥 Firewall Status</h3>
+              <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-3 md:mb-4">Firewall Status</h3>
               <div className="space-y-2 md:space-y-3">
                 {firewalls.slice(0, 3).map((firewall) => {
                   const expiry = getExpiryStatus(firewall.license_expiry);
@@ -460,12 +460,13 @@ const ITInfrastructureHealthAdvanced = ({ token, user }) => {
           {activeTab === 'firewalls' && (
             <div className="bg-white rounded-lg shadow-md p-4 md:p-6 w-full max-w-full overflow-hidden">
               <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-4 md:mb-6">
-                <h2 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900">🔥 Firewall Management</h2>
+                <h2 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900">Firewall Management</h2>
                 <button
                   onClick={() => openModal('firewall')}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-xs md:text-sm font-medium w-full sm:w-auto whitespace-nowrap"
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-xs md:text-sm font-medium w-full sm:w-auto whitespace-nowrap flex items-center justify-center gap-2"
                 >
-                  ➕ Add Firewall
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                  Add Firewall
                 </button>
               </div>
           
@@ -498,9 +499,10 @@ const ITInfrastructureHealthAdvanced = ({ token, user }) => {
                   </div>
                   <button
                     onClick={() => openModal('firewall', firewall)}
-                    className="w-full mt-2 text-blue-600 hover:text-blue-900 text-sm font-medium py-1 border border-blue-200 rounded hover:bg-blue-50"
+                    className="w-full mt-2 text-blue-600 hover:text-blue-900 text-sm font-medium py-1 border border-blue-200 rounded hover:bg-blue-50 flex items-center justify-center gap-2"
                   >
-                    ✏️ Edit
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z"/></svg>
+                    Edit
                   </button>
                 </div>
               );
@@ -542,9 +544,10 @@ const ITInfrastructureHealthAdvanced = ({ token, user }) => {
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                           <button
                             onClick={() => openModal('firewall', firewall)}
-                            className="text-blue-600 hover:text-blue-900 mr-3"
+                            className="text-blue-600 hover:text-blue-900 mr-3 flex items-center gap-1"
                           >
-                            ✏️ Edit
+                            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z"/></svg>
+                            Edit
                           </button>
                         </td>
                       </tr>
@@ -561,12 +564,13 @@ const ITInfrastructureHealthAdvanced = ({ token, user }) => {
           {activeTab === 'vendors' && (
             <div className="bg-white rounded-lg shadow-md p-4 md:p-6 w-full max-w-full overflow-hidden">
               <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-4 md:mb-6">
-                <h2 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900">🏢 Vendor Management</h2>
+                <h2 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900">Vendor Management</h2>
                 <button
                   onClick={() => openModal('vendor')}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-xs md:text-sm font-medium w-full sm:w-auto whitespace-nowrap"
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-xs md:text-sm font-medium w-full sm:w-auto whitespace-nowrap flex items-center justify-center gap-2"
                 >
-                  ➕ Add Vendor
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                  Add Vendor
                 </button>
               </div>
           
@@ -598,9 +602,10 @@ const ITInfrastructureHealthAdvanced = ({ token, user }) => {
                 </div>
                 <button
                   onClick={() => openModal('vendor', vendor)}
-                  className="w-full mt-2 text-blue-600 hover:text-blue-900 text-sm font-medium py-1 border border-blue-200 rounded hover:bg-blue-50"
+                  className="w-full mt-2 text-blue-600 hover:text-blue-900 text-sm font-medium py-1 border border-blue-200 rounded hover:bg-blue-50 flex items-center justify-center gap-2"
                 >
-                  ✏️ Edit
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z"/></svg>
+                  Edit
                 </button>
               </div>
             ))}
@@ -633,9 +638,10 @@ const ITInfrastructureHealthAdvanced = ({ token, user }) => {
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                         <button
                           onClick={() => openModal('vendor', vendor)}
-                          className="text-blue-600 hover:text-blue-900 mr-3"
+                          className="text-blue-600 hover:text-blue-900 mr-3 flex items-center gap-1"
                         >
-                          ✏️ Edit
+                          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z"/></svg>
+                          Edit
                         </button>
                       </td>
                     </tr>
@@ -651,12 +657,13 @@ const ITInfrastructureHealthAdvanced = ({ token, user }) => {
           {activeTab === 'downtimes' && (
             <div className="bg-white rounded-lg shadow-md p-4 md:p-6 w-full max-w-full overflow-hidden">
               <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-4 md:mb-6">
-                <h2 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900">⏰ Downtime Records</h2>
+                <h2 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900">Downtime Records</h2>
                 <button
                   onClick={() => openModal('downtime')}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-xs md:text-sm font-medium w-full sm:w-auto whitespace-nowrap"
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-xs md:text-sm font-medium w-full sm:w-auto whitespace-nowrap flex items-center justify-center gap-2"
                 >
-                  ➕ Add Downtime
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                  Add Downtime
                 </button>
               </div>
           
@@ -693,9 +700,10 @@ const ITInfrastructureHealthAdvanced = ({ token, user }) => {
                 </div>
                 <button
                   onClick={() => openModal('downtime', downtime)}
-                  className="w-full mt-2 text-blue-600 hover:text-blue-900 text-sm font-medium py-1 border border-blue-200 rounded hover:bg-blue-50"
+                  className="w-full mt-2 text-blue-600 hover:text-blue-900 text-sm font-medium py-1 border border-blue-200 rounded hover:bg-blue-50 flex items-center justify-center gap-2"
                 >
-                  ✏️ Edit
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z"/></svg>
+                  Edit
                 </button>
               </div>
             ))}
@@ -734,9 +742,10 @@ const ITInfrastructureHealthAdvanced = ({ token, user }) => {
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                         <button
                           onClick={() => openModal('downtime', downtime)}
-                          className="text-blue-600 hover:text-blue-900 mr-3"
+                          className="text-blue-600 hover:text-blue-900 mr-3 flex items-center gap-1"
                         >
-                          ✏️ Edit
+                          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z"/></svg>
+                          Edit
                         </button>
                       </td>
                     </tr>
@@ -752,12 +761,13 @@ const ITInfrastructureHealthAdvanced = ({ token, user }) => {
           {activeTab === 'servers' && (
             <div className="bg-white rounded-lg shadow-md p-4 md:p-6 w-full max-w-full overflow-hidden">
               <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-4 md:mb-6">
-                <h2 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900">🖥️ Server Management</h2>
+                <h2 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900">Server Management</h2>
                 <button
                   onClick={() => openModal('server')}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-xs md:text-sm font-medium w-full sm:w-auto whitespace-nowrap"
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-xs md:text-sm font-medium w-full sm:w-auto whitespace-nowrap flex items-center justify-center gap-2"
                 >
-                  ➕ Add Server
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                  Add Server
                 </button>
               </div>
           
@@ -798,9 +808,10 @@ const ITInfrastructureHealthAdvanced = ({ token, user }) => {
                 </div>
                 <button
                   onClick={() => openModal('server', server)}
-                  className="w-full mt-2 text-blue-600 hover:text-blue-900 text-sm font-medium py-1 border border-blue-200 rounded hover:bg-blue-50"
+                  className="w-full mt-2 text-blue-600 hover:text-blue-900 text-sm font-medium py-1 border border-blue-200 rounded hover:bg-blue-50 flex items-center justify-center gap-2"
                 >
-                  ✏️ Edit
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z"/></svg>
+                  Edit
                 </button>
               </div>
             ))}
@@ -841,9 +852,10 @@ const ITInfrastructureHealthAdvanced = ({ token, user }) => {
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                         <button
                           onClick={() => openModal('server', server)}
-                          className="text-blue-600 hover:text-blue-900 mr-3"
+                          className="text-blue-600 hover:text-blue-900 mr-3 flex items-center gap-1"
                         >
-                          ✏️ Edit
+                          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z"/></svg>
+                          Edit
                         </button>
                       </td>
                     </tr>
@@ -859,12 +871,13 @@ const ITInfrastructureHealthAdvanced = ({ token, user }) => {
           {activeTab === 'procurement' && (
             <div className="bg-white rounded-lg shadow-md p-4 md:p-6 w-full max-w-full overflow-hidden">
               <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-4 md:mb-6">
-                <h2 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900">📦 Procurement</h2>
+                <h2 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900">Procurement</h2>
                 <button
                   onClick={() => openModal('procurement')}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-xs md:text-sm font-medium w-full sm:w-auto whitespace-nowrap"
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-xs md:text-sm font-medium w-full sm:w-auto whitespace-nowrap flex items-center justify-center gap-2"
                 >
-                  ➕ Add Request
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                  Add Request
                 </button>
               </div>
           
@@ -905,9 +918,10 @@ const ITInfrastructureHealthAdvanced = ({ token, user }) => {
                 </div>
                 <button
                   onClick={() => openModal('procurement', procurement)}
-                  className="w-full mt-2 text-blue-600 hover:text-blue-900 text-sm font-medium py-1 border border-blue-200 rounded hover:bg-blue-50"
+                  className="w-full mt-2 text-blue-600 hover:text-blue-900 text-sm font-medium py-1 border border-blue-200 rounded hover:bg-blue-50 flex items-center justify-center gap-2"
                 >
-                  ✏️ Edit
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z"/></svg>
+                  Edit
                 </button>
               </div>
             ))}
@@ -948,9 +962,10 @@ const ITInfrastructureHealthAdvanced = ({ token, user }) => {
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                         <button
                           onClick={() => openModal('procurement', procurement)}
-                          className="text-blue-600 hover:text-blue-900 mr-3"
+                          className="text-blue-600 hover:text-blue-900 mr-3 flex items-center gap-1"
                         >
-                          ✏️ Edit
+                          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z"/></svg>
+                          Edit
                         </button>
                       </td>
                     </tr>
@@ -968,11 +983,11 @@ const ITInfrastructureHealthAdvanced = ({ token, user }) => {
           <div className="relative mx-auto p-4 md:p-5 border w-full max-w-md shadow-lg rounded-md bg-white">
             <div className="mt-3">
               <h3 className="text-lg font-medium text-gray-900 mb-4">
-                {modalType === 'firewall' && '🔥 Firewall Details'}
-                {modalType === 'vendor' && '🏢 Vendor Details'}
-                {modalType === 'downtime' && '⏰ Downtime Record'}
-                {modalType === 'server' && '🖥️ Server Details'}
-                {modalType === 'procurement' && '📦 Procurement Request'}
+                {modalType === 'firewall' && 'Firewall Details'}
+                {modalType === 'vendor' && 'Vendor Details'}
+                {modalType === 'downtime' && 'Downtime Record'}
+                {modalType === 'server' && 'Server Details'}
+                {modalType === 'procurement' && 'Procurement Request'}
               </h3>
               <form onSubmit={handleSubmit} className="space-y-4">
                 {modalType === 'firewall' && (

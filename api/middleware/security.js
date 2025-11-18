@@ -46,13 +46,20 @@ const createAdvancedRateLimit = (options = {}) => {
       // Use combination of IP and user ID for authenticated requests
       return req.user ? `${req.ip}-${req.user.id}` : req.ip;
     },
-    onLimitReached: (req, res, options) => {
+    handler: (req, res, next, options) => {
+      // Log when rate limit is exceeded
       logger.warn('Rate limit exceeded', {
         ip: req.ip,
         userAgent: req.get('User-Agent'),
         endpoint: req.originalUrl,
         userId: req.user?.id,
         timestamp: new Date().toISOString()
+      });
+      
+      // Send rate limit response
+      res.status(options.statusCode).json({
+        detail: message,
+        retryAfter: res.getHeader('Retry-After')
       });
     }
   });
