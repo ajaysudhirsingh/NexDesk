@@ -29,6 +29,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { format } from 'date-fns';
 import ITInfrastructureHealthAdvanced from './components/ITInfrastructureHealthAdvanced';
 import PasswordInput from './components/PasswordInput';
+import PWAInstallPrompt from './components/PWAInstallPrompt';
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -2724,6 +2725,9 @@ const App = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 flex relative">
+      {/* PWA Install Prompt */}
+      <PWAInstallPrompt />
+      
       {/* Mobile Menu Overlay */}
       {isMobile && isMobileMenuOpen && (
         <div 

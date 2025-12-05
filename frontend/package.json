@@ -24,7 +24,8 @@
     "lint:fix": "eslint src --ext .js,.jsx,.ts,.tsx --fix",
     "format": "prettier --write src/**/*.{js,jsx,ts,tsx,css,md}",
     "clean": "rm -rf build node_modules/.cache",
-    "prebuild": "npm run clean"
+    "prebuild": "npm run clean",
+    "serve:pwa": "npm run build && serve -s build"
   },
   "browserslist": {
     "production": [
